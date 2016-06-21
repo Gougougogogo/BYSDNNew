@@ -1,0 +1,737 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="641" Name="TaskmgrCase" Product="taskmgr.exe">
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="1">
+    <Tricks>1000</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>50</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="2">
+    <Tricks>94</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>50</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="3">
+    <Tricks>390</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>62</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="4">
+    <Tricks>86</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>62</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="5">
+    <Tricks>524</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>68</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="6">
+    <Tricks>90</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>68</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="7">
+    <Tricks>1000</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>53</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="8">
+    <Tricks>82</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>53</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="9">
+    <Tricks>279</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>56</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="10">
+    <Tricks>92</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>56</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="11">
+    <Tricks>1000</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>52</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="12">
+    <Tricks>94</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>52</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="13">
+    <Tricks>124</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>52</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="14">
+    <Tricks>94</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>52</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="15">
+    <Tricks>360</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>64</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="16">
+    <Tricks>94</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>64</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="17">
+    <Tricks>124</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>64</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="18">
+    <Tricks>96</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>64</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="19">
+    <Tricks>892</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>59</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="20">
+    <Tricks>86</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>59</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="21">
+    <Tricks>115</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyDown</Status>
+    <Key>59</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="22">
+    <Tricks>88</Tricks>
+    <ControlTypeID>0</ControlTypeID>
+    <Status>KeyUp</Status>
+    <Key>59</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="23">
+    <Tricks>635859728874203673</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>91</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="24">
+    <Tricks>635859728875287269</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>82</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="25">
+    <Tricks>635859728877163819</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>82</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="26">
+    <Tricks>635859728877631007</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>91</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="27">
+    <Tricks>635859728885757216</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>84</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="28">
+    <Tricks>635859728887008151</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>84</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="29">
+    <Tricks>635859728888101031</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>65</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="30">
+    <Tricks>635859728889505940</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>65</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="31">
+    <Tricks>635859728891068426</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>83</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="32">
+    <Tricks>635859728892162169</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>83</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="33">
+    <Tricks>635859728893255906</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>75</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="34">
+    <Tricks>635859728894353124</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>75</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="35">
+    <Tricks>635859728897475214</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>77</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="36">
+    <Tricks>635859728898724620</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>77</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="37">
+    <Tricks>635859728899349618</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>71</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="38">
+    <Tricks>635859728900599619</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>71</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="39">
+    <Tricks>635859728902006584</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>82</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="40">
+    <Tricks>635859728903257134</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>82</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="41">
+    <Tricks>635859728908414577</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>13</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="42">
+    <Tricks>635859728909662056</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>13</Key>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="43">
+    <Tricks>635859728942021154</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase001</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="44">
+    <Tricks>635859728964364764</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>More details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.903225806451613</XRate>
+    <YRate>0.464285714285714</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="45">
+    <Tricks>635859728965302252</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>More details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.903225806451613</XRate>
+    <YRate>0.464285714285714</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="46">
+    <Tricks>635859729044373431</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.353503184713376</XRate>
+    <YRate>0.5</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="47">
+    <Tricks>635859729045311086</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.353503184713376</XRate>
+    <YRate>0.5</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="48">
+    <Tricks>635859729053280004</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>91</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="49">
+    <Tricks>635859729056716488</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>KeyDown</Status>
+    <Key>38</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="50">
+    <Tricks>635859729057653947</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>38</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="51">
+    <Tricks>635859729059061001</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>KeyUp</Status>
+    <Key>91</Key>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="52">
+    <Tricks>635859729091248328</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase002</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="53">
+    <Tricks>635859729118647079</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.353503184713376</XRate>
+    <YRate>0.5</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="54">
+    <Tricks>635859729119427606</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Performance</ControlName>
+    <Status>Click</Status>
+    <XRate>0.475</XRate>
+    <YRate>0.5</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="55">
+    <Tricks>635859729137397675</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase003</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="56">
+    <Tricks>635859729155036310</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.178006329113924</XRate>
+    <YRate>0.428571428571429</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="57">
+    <Tricks>635859729156131568</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.178006329113924</XRate>
+    <YRate>0.428571428571429</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="58">
+    <Tricks>635859729172146140</Tricks>
+    <AutomationID />
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>Memory</ControlName>
+    <Status>Click</Status>
+    <XRate>0.264367816091954</XRate>
+    <YRate>0.619047619047619</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="59">
+    <Tricks>635859729173553096</Tricks>
+    <AutomationID />
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>Memory</ControlName>
+    <Status>Click</Status>
+    <XRate>0.264367816091954</XRate>
+    <YRate>0.619047619047619</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="60">
+    <Tricks>635859729187147859</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase004</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="61">
+    <Tricks>635859729209959122</Tricks>
+    <AutomationID>sidebar_net_name_0</AutomationID>
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>Ethernet</ControlName>
+    <Status>Click</Status>
+    <XRate>0.216981132075472</XRate>
+    <YRate>0.238095238095238</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="62">
+    <Tricks>635859729211522406</Tricks>
+    <AutomationID>sidebar_net_name_0</AutomationID>
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>Ethernet</ControlName>
+    <Status>Click</Status>
+    <XRate>0.216981132075472</XRate>
+    <YRate>0.238095238095238</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="63">
+    <Tricks>635859729233240182</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase005</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="64">
+    <Tricks>635859729253566242</Tricks>
+    <AutomationID />
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>CPU</ControlName>
+    <Status>Click</Status>
+    <XRate>0.544117647058823</XRate>
+    <YRate>0.238095238095238</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="65">
+    <Tricks>635859729254973319</Tricks>
+    <AutomationID />
+    <ControlTypeID>50020</ControlTypeID>
+    <ControlName>CPU</ControlName>
+    <Status>Click</Status>
+    <XRate>0.544117647058823</XRate>
+    <YRate>0.238095238095238</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="66">
+    <Tricks>635859729279349364</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>App history</ControlName>
+    <Status>Click</Status>
+    <XRate>0.342465753424658</XRate>
+    <YRate>0.55</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="67">
+    <Tricks>635859729279972289</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>App history</ControlName>
+    <Status>Click</Status>
+    <XRate>0.342465753424658</XRate>
+    <YRate>0.55</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="68">
+    <Tricks>635859729322160299</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase006</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="69">
+    <Tricks>635859729342003070</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Startup</ControlName>
+    <Status>Click</Status>
+    <XRate>0.34</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="70">
+    <Tricks>635859729343097678</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Startup</ControlName>
+    <Status>Click</Status>
+    <XRate>0.34</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="71">
+    <Tricks>635859729352627527</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase007</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="72">
+    <Tricks>635859729366377414</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Startup</ControlName>
+    <Status>Click</Status>
+    <XRate>0.34</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="73">
+    <Tricks>635859729366533559</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Users</ControlName>
+    <Status>Click</Status>
+    <XRate>0.325</XRate>
+    <YRate>0.35</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="74">
+    <Tricks>635859729374534580</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase008</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="75">
+    <Tricks>635859729384540069</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.468085106382979</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="76">
+    <Tricks>635859729385321491</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.468085106382979</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="77">
+    <Tricks>635859729402454407</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase009</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="78">
+    <Tricks>635859729412621185</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.468085106382979</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="79">
+    <Tricks>635859729413871100</Tricks>
+    <AutomationID />
+    <ControlTypeID>50019</ControlTypeID>
+    <ControlName>Services</ControlName>
+    <Status>Click</Status>
+    <XRate>0.333333333333333</XRate>
+    <YRate>0.4</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="ScreenCaptureAction" Item="ScreenCaptureAction" Queue="80">
+    <Tricks>635859729439628577</Tricks>
+    <AutomationID />
+    <ControlTypeID>0</ControlTypeID>
+    <ControlName />
+    <Status>TaskmgrCase010</Status>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="81">
+    <Tricks>635859729468866071</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.283227848101266</XRate>
+    <YRate>0.464285714285714</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="82">
+    <Tricks>635859729470272894</Tricks>
+    <AutomationID>TitleBar</AutomationID>
+    <ControlTypeID>50037</ControlTypeID>
+    <ControlName />
+    <Status>Click</Status>
+    <XRate>0.283227848101266</XRate>
+    <YRate>0.464285714285714</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="83">
+    <Tricks>635859729493532092</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.520833333333333</XRate>
+    <YRate>0.392857142857143</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Down</ButtonStatus>
+  </Action>
+  <Action xsi:type="MouseAction" Item="Mouse" Queue="84">
+    <Tricks>635859729494470044</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>Click</Status>
+    <XRate>0.520833333333333</XRate>
+    <YRate>0.392857142857143</YRate>
+    <Button>Left</Button>
+    <ButtonStatus>Up</ButtonStatus>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="85">
+    <Tricks>635859729518048659</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>KeyDown,Extended</Status>
+    <Key>164</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="86">
+    <Tricks>635859729518985762</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>KeyDown,Extended</Status>
+    <Key>115</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="87">
+    <Tricks>635859729520236076</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>KeyUp,Extended</Status>
+    <Key>115</Key>
+  </Action>
+  <Action xsi:type="KeyboardAction" Item="Keyboard" Queue="88">
+    <Tricks>635859729520548611</Tricks>
+    <AutomationID>CBExpandoButtonImage</AutomationID>
+    <ControlTypeID>50000</ControlTypeID>
+    <ControlName>Fewer details</ControlName>
+    <Status>KeyUp</Status>
+    <Key>164</Key>
+  </Action>
+</Record>

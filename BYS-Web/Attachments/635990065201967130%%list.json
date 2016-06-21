@@ -1,0 +1,174 @@
+{
+  "TestPass": {
+    NickName: "4299572",
+    Product: "Windows Server 2012 R2",
+    Nkb:"NB115451",
+    Version: "v12",
+    TestOwner: "Kevin Xi",
+    Tester: "Siyu gou gou",
+    Status: "In progress",
+    Progress: "Release Change",
+    PackagePath: "Typo in source ProtocolId of TrafficSelectors"
+  },
+  "CodeBug": {
+    Id: "4105560",
+    Product: "Windows Server 2012 R2",
+    Release: "2016.06 C",
+    Title: "AD backport recognize new trust type for SID filtering change",
+    Binaries: "Typo in source ProtocolIt  of TrafficSelectors",
+    Nkb: "NB115451"
+  },
+  LocalizationBug: {
+    Id: "4105560",
+    Product: "Windows Server 2012 R2",
+    Release: "2016.06 C",
+    Title: "AD backport recognize new trust type for SID filtering change",
+    Binaries: "Typo in source ProtocolId of TrafficSelectors"",
+    Nkb: "NB115451"
+  },
+  TestBug: [
+    {
+      Id: "123456",
+      Title: "ProtocolId of TrafficSelectors"
+      "
+    },
+    {
+      Id: "15595",
+      Title: "AD backport recognize"
+    }
+  ],
+  Binary: [
+    {
+      Name: "Binary1",
+      LCGPath: "LCG Path 1"
+    },
+    {
+      Name: "Binary2",
+      LCGPath: "LCG Path 2"
+    },
+    {
+      Name: "Binary3",
+      LCGPath: "LCG Path 3"
+    }
+  ],
+  Job: [
+    {
+      DataStore: "DataStore1",
+      Id: "100546",
+      Title: "Title one for DataStore1"
+    },
+    {
+      DataStore: "DataStore2",
+      Id: "105005",
+      Title: "Title two for DataStore2"
+    },
+    {
+      DataStore: "DataStore3",
+      Id: "100622",
+      Title: "Title three for DataStore3"
+    }
+  ],
+  ResultCollection: [
+    {
+      DataStore: "DataStore1",
+      Id: "100546",
+      Title: "Title one for DataStore1",
+      Total: 20,
+      Complete: 10,
+      Investigate: 3,
+      Canceled: 3,
+      Resolved: 2,
+      InProgress: 2
+    },
+    {
+      DataStore: "DataStore2",
+      Id: "105005",
+      Title: "Title two for DataStore2",
+      Total: 20,
+      Complete: 10,
+      Investigate: 3,
+      Canceled: 3,
+      Resolved: 2,
+      InProgress: 2
+    },
+    {
+      DataStore: "DataStore3",
+      Id: "100622",
+      Title: "Title three for DataStore3",
+      Total: 20,
+      Complete: 10,
+      Investigate: 3,
+      Canceled: 3,
+      Resolved: 2,
+      InProgress: 2
+    }
+  ],
+  MailThread: [
+    { Subject: "MailThread Subject one" },
+    { Subject: "MailThread Subject two" }
+  ],
+  Resources: [
+    {
+      ResourceId: "A100331",
+      ChangeType: "Change",
+      New: "A100332",
+      Old: "A1003323"
+    },
+    {
+      ResourceId: "A100335",
+      ChangeType: "Change",
+      New: "A100336",
+      Old: "A1003328"
+    },
+    {
+      ResourceId: "A100337",
+      ChangeType: "Change",
+      New: "A100339",
+      Old: "A1003325"
+    },
+  ],
+  Results: [
+    {
+      Id: "2244521",
+      JobTitle: "KB23641:testing add",
+      Status: "Complete",
+      Bug: "3451"
+    },
+    {
+      Id: "2245821",
+      JobTitle: "KB23616:testing edit",
+      Status: "On going",
+      Bug: "2237"
+    },
+  ],
+  Mails: [
+    {
+      Sent: "April 12,2016 10:04 AM",
+      From: "Weigang Zhou(Beyondsoft Consulting Inc)",
+      Content: "Hi huan, I put the bug into TFS..."
+    },
+    {
+      Sent: "April 15,2016 12:04 AM",
+      From: "Kevin Xi(Beyondsoft Consulting Inc)",
+      Content: "Hi huan, I put the bug into TFS..."
+    },
+  ],
+  Files: [
+    {
+      Type: "LCG",
+      Name: "Aaa.lcg"
+    },
+    {
+      Type: "Capture",
+      Name: "Bbb.Png"
+    },
+    {
+      Type: "Log",
+      Name: "Ccc.log"
+    },
+    {
+      Type: "Doc",
+      Name: "Spec.docx"
+    }
+  ]
+}

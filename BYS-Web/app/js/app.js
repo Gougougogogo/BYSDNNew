@@ -370,15 +370,10 @@
             sref: 'app.dashboard',
             // iconclass: 'ion-aperture',
             imgpath: 'app/img/icons/aperture.svg',
-            order: 1,
-            label: {
-                count: 2,
-                classname: 'badge bg-success'
-            }
+            order: 1
         };
 
         Menu.addItem(menuItem);
-
     }
 })();
 

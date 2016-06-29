@@ -1,4 +1,5 @@
-﻿using BYS_Web.Entity;
+﻿using BYS_Web.Common;
+using BYS_Web.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace BYS_Web.Controllers
 {
+    [NoCache]
     public class HomeController : Controller
     {
         BYSDNEntities entities = new BYSDNEntities();

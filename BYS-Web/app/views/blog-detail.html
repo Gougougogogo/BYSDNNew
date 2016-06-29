@@ -7,6 +7,44 @@
         </div>
     </div>
     <div class="container container-lg">
+        <div class="card" ng-show="true" ng-if="topItems.length > 0">
+            <div class="card-body">
+                <table class="table table-hover table-fixed va-middle">
+                    <thead>
+                        <tr>
+                            <td width="50px"></td>
+                            <td width="50px"></td>
+                            <td width="100px"></td>
+                            <td></td>
+                            <td width="20%"></td>
+                            <td width="15px"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in topItems">
+                            <td>
+                                <span ng-if="item.Status == 5" style="color:orange">Top!</span>
+                                <span ng-if="item.Status == 2" style="color:red">Hot!</span>
+                            </td>
+                            <td class="wd-xxs"><img src="{{ item.UserImage }}" alt="user" class="img-circle thumb32" /></td>
+                            <td class="text-ellipsis wd-sm">{{ item.UserName }}</td>
+                            <td class="text-ellipsis" ng-click="openDetail(item)">{{ item.Title }}</td>
+                            <td class="text-ellipsis text-right wd-sm">{{ item.PublishDate }} </td>
+                            <td>
+                                <!-- START dropdown-->
+                                <div uib-dropdown="dropdown2" class="pull-right dropdown" ng-if="isManager">
+                                    <button type="button" uib-dropdown-toggle="" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li ng-click="setStatus(item,1)"><a href=""><em class="ion-edit icon-fw"></em>Cancel</a></li>
+                                    </ul>
+                                </div>
+                                <!-- END dropdown-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <span class="input-group-btn">
@@ -15,15 +53,35 @@
             </div>
             <div class="card-body">
                 <table class="table table-hover table-fixed va-middle">
+                    <thead>
+                        <tr>
+                            <td width="50px"></td>
+                            <td width="100px"></td>
+                            <td></td>
+                            <td width="20%"></td>
+                            <td width="15px"></td>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr ng-click="openDetail(item.BlogId)" ng-repeat="item in blogItems">
+                        <tr ng-repeat="item in blogItems">
                             <td class="wd-xxs"><img src="{{ item.UserImage }}" alt="user" class="img-circle thumb32" /></td>
                             <td class="text-ellipsis wd-sm">{{ item.UserName }}</td>
-                            <td class="text-ellipsis">{{ item.Title }}</td>
-                            <td class="text-ellipsis wd-sm">{{ item.PublishDate }} </td>
+                            <td class="text-ellipsis" ng-click="openDetail(item)">{{ item.Title }}</td>
+                            <td class="text-ellipsis text-right wd-sm">{{ item.PublishDate }} </td>
+                            <td>
+                                <!-- START dropdown-->
+                                <div uib-dropdown="dropdown2" class="pull-right dropdown" ng-if="isManager">
+                                    <button type="button" uib-dropdown-toggle="" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <!-- Status 0. Deleted 1. Normal 2. Hot 5. Top -->
+                                        <li ng-click="setStatus(item,2)"><a href=""><em class="ion-edit icon-fw"></em>Set as Hot</a></li>
+                                        <li ng-click="setStatus(item,5)"><a href=""><em class="ion-edit icon-fw"></em>Set as Top</a></li>
+                                    </ul>
+                                </div>
+                                <!-- END dropdown-->
+                            </td>
                         </tr>
                     </tbody>
-
                 </table>
             </div>       
             <div class="card-body" ng-if="Items > itemCountPerPage">

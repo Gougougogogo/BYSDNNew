@@ -27,11 +27,22 @@ namespace BYS_Web.Controllers
             return View();
         }
 
-        public JsonResult GetBBSQuestionPageCount(int pagecount)
+        public JsonResult GetBBSQuestionPageCount(int pagecount,string typeId)
         {
-            int bbsCount = (from a in entities.Table_Question
+            int bbsCount = 1;
+            if (typeId == "")
+            {
+                bbsCount = (from a in entities.Table_Question
+                            where a.Status == 1
                             select a.ID).Count();
-
+            }
+            else
+            {
+                Guid id = new Guid(typeId);
+                bbsCount = (from a in entities.Table_Question
+                            where a.TypeId == id && a.Status == 1
+                            select a.ID).Count();
+            }
             return Json(new { success = true, retData = bbsCount }, JsonRequestBehavior.AllowGet);
         }
 
@@ -57,26 +68,92 @@ namespace BYS_Web.Controllers
             return Json(new { success = false, retData = "Fail on get bbs content" }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult RequestQuestionList(int page)
+        public JsonResult RequestQuestionList(int page, string typeId)
         {
             int start = (page - 1) * 10;
+            List<BBSTitleModel> bbs = null;
 
-            List<BBSTitleModel> bbs = (from a in entities.Table_Question
-                                       orderby a.Date descending
-                                       select a)
-                                       .Skip(start)
-                                       .Take(10)
-                                       .AsEnumerable()
-                                       .Select(c =>
-                                       new BBSTitleModel()
-                                       {
-                                           BBSId = c.ID.ToString(),
-                                           PublishDate = GetStringData(c.Date),
-                                           Title = c.Tittle,
-                                           UserImage = c.Table_User.Photo,
-                                           Brief = GetBrief(c.Content)
-                                       }).ToList();
+            if (typeId == "")
+            {
+                bbs = (from a in entities.Table_Question
+                       orderby a.Date descending
+                       where a.Status == 1
+                       select a)
+                        .Skip(start)
+                        .Take(10)
+                        .AsEnumerable()
+                        .Select(c =>
+                        new BBSTitleModel()
+                        {
+                            BBSId = c.ID.ToString(),
+                            PublishDate = GetStringData(c.Date),
+                            Title = c.Tittle,
+                            UserName = c.Table_User.Name,
+                            UserImage = c.Table_User.Photo,
+                            Brief = GetBrief(c.Content),
+                            Status = c.Status
+                        }).ToList();
 
+                //Get top level bbs 
+                var topLevel = (from a in entities.Table_Question
+                                orderby a.Status descending, a.Date descending
+                                where a.Status > 1
+                                select a)
+                        .AsEnumerable()
+                        .Select(c =>
+                        new BBSTitleModel()
+                        {
+                            BBSId = c.ID.ToString(),
+                            PublishDate = GetStringData(c.Date),
+                            Title = c.Tittle,
+                            UserName = c.Table_User.Name,
+                            UserImage = c.Table_User.Photo,
+                            Brief = GetBrief(c.Content),
+                            Status = c.Status
+                        }).ToList();
+                bbs.AddRange(topLevel);
+            }
+            else
+            {
+                Guid id = new Guid(typeId);
+                bbs = (from a in entities.Table_Question
+                       orderby a.Date descending
+                       where a.Status == 1 && a.TypeId == id
+                       select a)
+                        .Skip(start)
+                        .Take(10)
+                        .AsEnumerable()
+                        .Select(c =>
+                        new BBSTitleModel()
+                        {
+                            BBSId = c.ID.ToString(),
+                            PublishDate = GetStringData(c.Date),
+                            Title = c.Tittle,
+                            UserName = c.Table_User.Name,
+                            UserImage = c.Table_User.Photo,
+                            Brief = GetBrief(c.Content),
+                            Status = c.Status
+                        }).ToList();
+
+                //Get top level bbs 
+                var topLevel = (from a in entities.Table_Question
+                                orderby a.Status descending , a.Date descending
+                                where a.Status > 1 && a.TypeId == id
+                                select a)
+                        .AsEnumerable()
+                        .Select(c =>
+                        new BBSTitleModel()
+                        {
+                            BBSId = c.ID.ToString(),
+                            PublishDate = GetStringData(c.Date),
+                            Title = c.Tittle,
+                            UserName = c.Table_User.Name,
+                            UserImage = c.Table_User.Photo,
+                            Brief = GetBrief(c.Content),
+                            Status = c.Status
+                        }).ToList();
+                bbs.AddRange(topLevel);
+            }
             return Json(new { success = true, retData = bbs }, JsonRequestBehavior.AllowGet);
         }
 
@@ -97,6 +174,19 @@ namespace BYS_Web.Controllers
                                            Brief = GetBrief(c.Content)
                                        }).ToList();
             return Json(new { success = true, retData = bbs }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetBBSItems()
+        {
+            var result = (from a in entities.Table_BBSItem
+                          orderby a.BBSTypeName ascending
+                          select new
+                          {
+                            ID = a.ID,
+                            BBSTypeName = a.BBSTypeName
+                          }).ToList();
+
+            return Json(new { success = true, retData = result }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetReplyInfos(string Id)
@@ -152,13 +242,36 @@ namespace BYS_Web.Controllers
         }
 
         [HttpPost]
+        public JsonResult SetBBSStatus(Guid bbsID, int status)
+        {
+            string userName = Request.LogonUserIdentity.Name;
+            if (CheckManagerAccess(userName, bbsID))
+            {
+                try
+                {
+                    Table_Question question = (from a in entities.Table_Question
+                                               where a.ID == bbsID
+                                               select a).FirstOrDefault();
+                    question.Status = status;
+                    entities.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception error)
+                {
+                    return Json(new { success = false, errorMessage = error.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new { success = false, errorMessage = "You don't have access." }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
         public JsonResult RequestPublish()
         {
             string title, tags, content;
-
+            Guid typeId;
             title = Request.Params["title"];
             tags = Request.Params["tags"];
             content = htmlDeCode(Request.Params["bbsContent"]);
+            typeId = new Guid(Request.Params["bbsTypeId"]);
             List<AttachmentModel> attachments = null;
 
             if (Request.Params["attachments"] != null)
@@ -184,6 +297,8 @@ namespace BYS_Web.Controllers
                     newQuestion.Publisher = user.ID;
                     newQuestion.Tags = tags;
                     newQuestion.Tittle = title;
+                    newQuestion.TypeId = typeId;
+                    newQuestion.Status = 1;
 
                     entities.Table_Question.Add(newQuestion);
                     List<Table_Attachments> files = new List<Table_Attachments>();
@@ -435,6 +550,18 @@ namespace BYS_Web.Controllers
             result = result.Replace("&nquot;", "\"");
 
             return result;
+        }
+
+        private bool CheckManagerAccess(string userName, Guid bbsId)
+        {
+            Guid UserId = (from a in entities.Table_User
+                           where a.Name.ToLower() == userName.ToLower()
+                           select a.ID).FirstOrDefault();
+            int count = (from a in entities.Table_BBSManager
+                         join b in entities.Table_Question on a.BBSTypeId equals b.TypeId
+                         where b.ID == bbsId && a.UserId == UserId
+                         select a.Id).Count();
+            return count == 1 ? true : false;
         }
     }
 }

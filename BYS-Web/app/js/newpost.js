@@ -1,4 +1,4 @@
-﻿angular.module('app.bbs').controller('NewPostController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+﻿angular.module('app.bbs').controller('NewPostController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     var attchmentsList = [];
     var common = {};
     function initTinymce() {
@@ -78,6 +78,10 @@
         }
         if ($scope.title.length > 250) {
             layer.msg('The question title accepte most 250 characters)');
+            return false;
+        }
+        if ($scope.selectedType == undefined || $scope.selectedType == null) {
+            layer.msg('The bbs type is required');
             return false;
         }
         if (tinymce.activeEditor.getContent() == '') {
@@ -178,9 +182,13 @@
 
     $scope.title = '';
 
+    $scope.selectedType;
+
     $scope.tags = [];
 
     $scope.selectedTags = 'Automation,C#,MVC';
+
+    $scope.availableTypes = $rootScope.BBSItems;
 
     initTinymce();
 
@@ -198,7 +206,8 @@
             title: $scope.title,
             tags: $scope.selectedTags,
             bbsContent: common.htmlEncode(content),
-            attachments: JSON.stringify(attchmentsList)
+            attachments: JSON.stringify(attchmentsList),
+            bbsTypeId: $scope.selectedType.ID
         };
         $.ajax({
             url: "../BBS/RequestPublish",

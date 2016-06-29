@@ -27,15 +27,18 @@ namespace BYS_Web.Entity
     
         public virtual DbSet<Table_Answer> Table_Answer { get; set; }
         public virtual DbSet<Table_Attachments> Table_Attachments { get; set; }
+        public virtual DbSet<Table_BBSItem> Table_BBSItem { get; set; }
+        public virtual DbSet<Table_BBSManager> Table_BBSManager { get; set; }
+        public virtual DbSet<Table_Blog> Table_Blog { get; set; }
+        public virtual DbSet<Table_BlogAttachments> Table_BlogAttachments { get; set; }
+        public virtual DbSet<Table_BlogItem> Table_BlogItem { get; set; }
+        public virtual DbSet<Table_BlogManager> Table_BlogManager { get; set; }
+        public virtual DbSet<Table_BlogReply> Table_BlogReply { get; set; }
         public virtual DbSet<Table_LogEntity> Table_LogEntity { get; set; }
         public virtual DbSet<Table_OperationLog> Table_OperationLog { get; set; }
         public virtual DbSet<Table_OperationType> Table_OperationType { get; set; }
         public virtual DbSet<Table_Question> Table_Question { get; set; }
-        public virtual DbSet<Table_User> Table_User { get; set; }
-        public virtual DbSet<Table_Blog> Table_Blog { get; set; }
-        public virtual DbSet<Table_BlogItem> Table_BlogItem { get; set; }
-        public virtual DbSet<Table_BlogAttachments> Table_BlogAttachments { get; set; }
-        public virtual DbSet<Table_BlogReply> Table_BlogReply { get; set; }
         public virtual DbSet<Table_SubBlogReply> Table_SubBlogReply { get; set; }
+        public virtual DbSet<Table_User> Table_User { get; set; }
     }
 }

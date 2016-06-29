@@ -919,17 +919,19 @@
             },
             'ui.select': {
                 files: [
-                    'vendor/angular-ui-select/dist/select.js',
-                    'vendor/angular-ui-select/dist/select.css'
+                    'vendor/angular-ui-select/dist/select.css',
+                    'vendor/angular-ui-select/dist/select.js',                   
                 ]
             },
             'ui.tinymce': {
+                serie: true,
                 files:
                     [
                         'vendor/tinymce/tinymce.min.js',
                         'vendor/tinymce/plugins/table/plugin.min.js',
                         'vendor/tinymce/plugins/paste/plugin.min.js',
-                        'vendor/tinymce/plugins/spellchecker/plugin.min.js',                        
+                        'vendor/tinymce/plugins/spellchecker/plugin.min.js',
+                        'vendor/tinymce/plugins/codesample/plugin.min.js',
                     ]   
             },
             'uiGmapgoogle-maps': {
@@ -1095,6 +1097,20 @@
                     'vendor/layer/layer.js',
                     'app/js/blogPost.js'
                 ]
+            },
+            'blogEdit':{
+                files: [
+                    'vendor/layer/skin/layer.css',
+                    'vendor/layer/layer.js',
+                    'app/js/editblog.js'
+                ]
+            },
+            'bbsSearch': {
+                files: [
+                    'vendor/layer/skin/layer.css',
+                    'vendor/layer/layer.js',
+                    'app/js/bbssearch.js'
+                ]
             }
         });
 
@@ -1200,7 +1216,8 @@
                                     if (!APP_REQUIRES[mod])
                                         throw new Error('Route resolve: Bad resource name [' + mod + ']');
                                     // finally, return the load promise
-                                    return $ocLL.load(APP_REQUIRES[mod]);
+                                    // New added, disabled cache
+                                    return $ocLL.load(APP_REQUIRES[mod], { cache: false });
                                 });
                             }
                         }
@@ -1257,9 +1274,9 @@
         .module('app.settings')
         .run(settingsRun);
 
-    settingsRun.$inject = ['$rootScope','$http'];
+    settingsRun.$inject = ['$rootScope','$http','Menu'];
 
-    function settingsRun($rootScope,$http) {
+    function settingsRun($rootScope,$http,Menu) {
 
         var themes = [
             'theme-1',
@@ -1291,6 +1308,8 @@
             header: {
                 menulink: 'menu-link-slide'
             },
+            managedBlog: [],
+            managedBBS : [],
             userName: '',
             userImg: 'app/img/user/01.jpg',
             footerHidden: false,
@@ -1304,7 +1323,8 @@
         }).success(function (e) {
                 $rootScope.app.userName = e.userName;
                 $rootScope.app.userImg = e.userImg;
-            
+                $rootScope.app.managedBlog = e.managedBlog;
+                $rootScope.app.managedBBS = e.managedBBS;
             //layer.close(load);
         }).error(function (data) {
             layer.msg(data);
@@ -1509,30 +1529,49 @@
         .module('app.bbs')
         .run(userRun);
 
-    userRun.$inject = ['Menu'];
+    userRun.$inject = ['Menu', '$http','$rootScope'];
 
-    function userRun(Menu) {
+    function userRun(Menu, $http, $rootScope) {
 
-        var menuItem = {
-            name: 'BBS',
-            sref: 'BBS',
-            order: 2,
-            //iconclass: 'ion-chatbubble-working',
-            imgpath: 'app/img/icons/radio-waves.svg',
-            subitems: [
-                {
-                    name: 'Home',
-                    sref: 'app.bbs.home'
-                },
-                {
-                    name: 'New Question',
-                    sref: 'app.bbs.newpost'
+        $http.get('../BBS/GetBBSItems').then(
+            function (retData) {
+                if (retData.data.success) {
+                    $rootScope.BBSItems = retData.data.retData;
+                    var items = [];
+                    items.push({ name: 'All', sref: 'app.bbs.home({itemId:\'\'})' });
+                    for (var i = 0; i < retData.data.retData.length; i++) {
+                        items.push({ name: retData.data.retData[i].BBSTypeName, sref: 'app.bbs.home({itemId:\'' + retData.data.retData[i].ID + '\'})' });
+                    }
+                    var menuItem = {
+                        name: 'BBS',
+                        sref: 'BBS',
+                        order: 2,
+                        //iconclass: 'ion-chatbubble-working',
+                        imgpath: 'app/img/icons/radio-waves.svg',
+                        subitems: items
+                    };
+
+                    Menu.addItem(menuItem);
                 }
-            ]
-        };
-
-        Menu.addItem(menuItem);
-
+            }
+        );
+        //var menuItem = {
+        //    name: 'BBS',
+        //    sref: 'BBS',
+        //    order: 2,
+        //    //iconclass: 'ion-chatbubble-working',
+        //    imgpath: 'app/img/icons/radio-waves.svg',
+        //    subitems: [
+        //        {
+        //            name: 'Home',
+        //            sref: 'app.bbs.home'
+        //        },
+        //        {
+        //            name: 'New Question',
+        //            sref: 'app.bbs.newpost'
+        //        }
+        //    ]
+        //};
     }
 })();
 
@@ -1560,10 +1599,16 @@
             require: ['ui.select', 'ui.tinymce', 'ngDropzone', 'bbsNewpost']
         })
         .state('app.bbs.home', {
-            url: '/home',
+            url: '/home/:itemId',
             title: 'Home',
             templateUrl: 'bbs-home.html',
             require: ['bbsHome']
+        })
+        .state('app.bbs.search', {
+            url: '/search/:keyword',
+            title: 'Search',
+            templateUrl: 'bbs-search.html',
+            require: ['bbsSearch']
         })
         .state('app.bbs.detail', {
             url: '/detail/:bbsId',
@@ -1601,6 +1646,12 @@
             title: 'Detail',
             templateUrl: 'blog-detail.html',
             require: ['blogDetail']
+        })
+        .state('app.blog.edit', {
+            url: '/edit/:blogId',
+            title: 'Edit',
+            templateUrl: 'blog-edit.html',
+            require: ['blogEdit', 'ui.tinymce']
         })
         .state('app.blog.newpost', {
             url: '/newpost/:blogTypeId',

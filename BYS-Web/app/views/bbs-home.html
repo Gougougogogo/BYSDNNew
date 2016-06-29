@@ -4,9 +4,48 @@
             <div class="media-body media-middle">
                 <h4 class="media-heading">BBS home page</h4><span class="text-muted">List the latest questions</span>
             </div>
+            <button ui-sref="app.bbs.newpost" class="btn btn-info" style="margin-top:10px"><span class="ion-paper-airplane"></span> New Question</button>
         </div>
     </div>
     <div class="container container-lg">
+        <div class="card" ng-show="true" ng-if="topItems.length > 0">
+            <div class="card-body">
+                <table class="table table-hover table-fixed va-middle">
+                    <thead>
+                        <tr>
+                            <td width="50px"></td>
+                            <td width="50px"></td>
+                            <td width="200px"></td>
+                            <td></td>
+                            <td width="20%"></td>
+                            <td width="15px"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in topItems">
+                            <td>
+                                <span ng-if="item.Status == 5" style="color:orange">Top!</span>
+                                <span ng-if="item.Status == 2" style="color:red">Hot!</span>
+                            </td>
+                            <td class="wd-xxs"><img src="{{ item.UserImage }}" alt="user" class="img-circle thumb32" /></td>
+                            <td class="text-ellipsis wd-xxs">{{ item.UserName }}</td>
+                            <td class="text-ellipsis" ng-click="gotoDetail(item.BBSId)">{{ item.Title }}</td>
+                            <td class="text-ellipsis text-right wd-sm">{{ item.PublishDate }} </td>
+                            <td>
+                                <!-- START dropdown-->
+                                <div uib-dropdown="dropdown2" class="pull-right dropdown" ng-if="isManager">
+                                    <button type="button" uib-dropdown-toggle="" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                    <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                        <li ng-click="setStatus(item,1)"><a href=""><em class="ion-edit icon-fw"></em>Cancel</a></li>
+                                    </ul>
+                                </div>
+                                <!-- END dropdown-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <form class="mt ng-pristine ng-valid" action="">
@@ -27,6 +66,17 @@
                 <!-- Inner card-->
                 <div class="card">
                     <div class="card-heading">
+                        <div class="pull-right">
+                            <!-- START dropdown-->
+                            <div uib-dropdown="dropdown2" class="pull-right dropdown" ng-if="isManager">
+                                <button type="button" uib-dropdown-toggle="" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
+                                <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
+                                    <li ng-click="setStatus(question,2)"><a href=""><em class="ion-edit icon-fw"></em>Set as Hot</a></li>
+                                    <li ng-click="setStatus(question,5)"><a href=""><em class="ion-edit icon-fw"></em>Set as Top</a></li>
+                                </ul>
+                            </div>
+                            <!-- END dropdown-->
+                        </div>
                         <div class="media m0">
                             <div class="media-left"><img class="media-object img-circle thumb48" alt="User" src="{{ question.UserImage }}"></div>
                             <div class="media-body media-middle pt-sm">

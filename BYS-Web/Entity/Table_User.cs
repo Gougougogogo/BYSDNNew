@@ -17,10 +17,12 @@ namespace BYS_Web.Entity
         public Table_User()
         {
             this.Table_Answer = new HashSet<Table_Answer>();
+            this.Table_BBSManager = new HashSet<Table_BBSManager>();
+            this.Table_Blog = new HashSet<Table_Blog>();
+            this.Table_BlogManager = new HashSet<Table_BlogManager>();
+            this.Table_BlogReply = new HashSet<Table_BlogReply>();
             this.Table_OperationLog = new HashSet<Table_OperationLog>();
             this.Table_Question = new HashSet<Table_Question>();
-            this.Table_Blog = new HashSet<Table_Blog>();
-            this.Table_BlogReply = new HashSet<Table_BlogReply>();
             this.Table_SubBlogReply = new HashSet<Table_SubBlogReply>();
         }
     
@@ -33,10 +35,12 @@ namespace BYS_Web.Entity
         public Nullable<int> Rate { get; set; }
     
         public virtual ICollection<Table_Answer> Table_Answer { get; set; }
+        public virtual ICollection<Table_BBSManager> Table_BBSManager { get; set; }
+        public virtual ICollection<Table_Blog> Table_Blog { get; set; }
+        public virtual ICollection<Table_BlogManager> Table_BlogManager { get; set; }
+        public virtual ICollection<Table_BlogReply> Table_BlogReply { get; set; }
         public virtual ICollection<Table_OperationLog> Table_OperationLog { get; set; }
         public virtual ICollection<Table_Question> Table_Question { get; set; }
-        public virtual ICollection<Table_Blog> Table_Blog { get; set; }
-        public virtual ICollection<Table_BlogReply> Table_BlogReply { get; set; }
         public virtual ICollection<Table_SubBlogReply> Table_SubBlogReply { get; set; }
     }
 }

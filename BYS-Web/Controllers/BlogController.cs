@@ -223,34 +223,97 @@ namespace BYS_Web.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult RequestEdit()
+        {
+            string title, content;             
+            title = Request.Params["title"];
+            Guid blogId =new Guid(Request.Params["blogId"]);
+            content = htmlDeCode(Request.Params["blogContent"]);
+
+            try
+            {
+                Table_User user = (from a in entities.Table_User
+                                   where a.Name == Request.LogonUserIdentity.Name
+                                   select a).FirstOrDefault();
+                if (user != null)
+                {
+                    if (CheckAccess(user.Name,blogId)) 
+                    {
+                        Table_Blog blog = (from a in entities.Table_Blog
+                                           where a.ID == blogId
+                                           select a).First();
+                        blog.Title = title;
+                        blog.Content = content;
+
+                        entities.SaveChanges();
+                        return Json(new { success = true,itemId =  blog.BlogItemId }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, errorMessage = "You don't have access to edit this blog" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json(new { success = true, retData = "The user is not registe" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Json(new { success = false, errorMessage = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public JsonResult GetItemsCount(Guid itemId)
         {
             var result = (from a in entities.Table_Blog
-                          where a.BlogItemId == itemId && a.Status > 0
+                          where a.BlogItemId == itemId && a.Status == 1
                           select a.ID).Count();
             return Json(new { success = true, retData = result }, JsonRequestBehavior.AllowGet);
         }
 
+        //Enum of status : 0 - deleted, 1 - normal, 2- hot, 5- top.
         public JsonResult GetItems(Guid itemId, int page)
         {
             int start = (page - 1) * 10;
 
-            var result = (from a in entities.Table_Blog
-                          where a.BlogItemId == itemId && a.Status > 0
-                          orderby a.Date descending
+            var topLevel = (from a in entities.Table_Blog
+                          where a.BlogItemId == itemId && a.Status > 1
+                          orderby a.Status descending, a.Date descending
                           select a)
-                            .Skip(start)
-                            .Take(10)
                             .AsEnumerable()
                             .Select(c =>
-                            new 
+                            new
                             {
                                 BlogId = c.ID.ToString(),
                                 PublishDate = GetStringData(c.Date),
                                 Title = c.Title,
                                 UserName = GetUserName(c.Table_User.Name),
                                 UserImage = c.Table_User.Photo,
-                            }).ToList(); ;
+                                Status = c.Status
+                            }).ToList();
+
+            var result = (from a in entities.Table_Blog
+                          where a.BlogItemId == itemId && a.Status == 1
+                          orderby a.Date descending
+                          select a)
+                            .Skip(start)
+                            .Take(10)
+                            .AsEnumerable()
+                            .Select(c =>
+                            new
+                            {
+                                BlogId = c.ID.ToString(),
+                                PublishDate = GetStringData(c.Date),
+                                Title = c.Title,
+                                UserName = GetUserName(c.Table_User.Name),
+                                UserImage = c.Table_User.Photo,
+                                Status = c.Status
+                            }).ToList();
+
+            result.AddRange(topLevel);
+
             return Json(new { success = true, retData = result }, JsonRequestBehavior.AllowGet);
         }
 
@@ -271,6 +334,45 @@ namespace BYS_Web.Controllers
                               PublisherName = c.Table_User.Name
                           }).First();
             return Json(new { success = true, retData = result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SetBlogStatus(Guid blogId, int status)
+        {
+            string userName = Request.LogonUserIdentity.Name;
+            if (CheckManagerAccess(userName, blogId))
+            {
+                try
+                {
+                    Table_Blog blog = (from a in entities.Table_Blog
+                                       where a.ID == blogId
+                                       select a).FirstOrDefault();
+                    blog.Status = status;
+                    entities.SaveChanges();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception error)
+                {
+                    return Json(new { success = false, errorMessage = error.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new { success = false, errorMessage = "You don't have access." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DeleteBlog(Guid blogId)
+        {
+            string userName = Request.LogonUserIdentity.Name;
+            if (CheckAccess(userName, blogId))
+            {
+                Table_Blog blog = (from a in entities.Table_Blog
+                                   where a.ID == blogId
+                                   select a).FirstOrDefault();
+                blog.Status = 0;
+                entities.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = true ,errorMessage = "You don't have access to delete this blog" }, JsonRequestBehavior.AllowGet);
         }
 
         private string GetStringData(DateTime dt)
@@ -380,6 +482,29 @@ namespace BYS_Web.Controllers
                 }
             }
             return result;
+        }
+
+        private bool CheckAccess(string userName,Guid blogId)
+        {
+            Guid UserId = (from a in entities.Table_User
+                           where a.Name.ToLower() == userName.ToLower()
+                           select a.ID).FirstOrDefault();
+            int count = (from a in entities.Table_Blog
+                         where a.ID == blogId && a.Publisher == UserId
+                         select a.ID).Count();
+            return count == 1 ? true : false;
+        }
+
+        private bool CheckManagerAccess(string userName, Guid blogId)
+        {
+            Guid UserId = (from a in entities.Table_User
+                           where a.Name.ToLower() == userName.ToLower()
+                           select a.ID).FirstOrDefault();
+            int count = (from a in entities.Table_BlogManager
+                         join b in entities.Table_Blog on a.BlogTypeId equals b.BlogItemId
+                         where b.ID == blogId && a.UserId == UserId
+                         select a.Id).Count();
+            return count == 1 ? true : false;
         }
     }
 }

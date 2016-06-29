@@ -50,12 +50,18 @@ namespace BYS_Web.Controllers
         public JsonResult GetUserInfo()
         {
             string userName = Request.LogonUserIdentity.Name;
-            var result = (from a in entities.Table_User
-                          where a.Name == userName
-                          select a).FirstOrDefault();
+            Table_User result = (from a in entities.Table_User
+                                 where a.Name == userName
+                                 select a).FirstOrDefault();
             if (result != null)
             {
-                return Json(new { userName = result.Name, userImg = result.Photo }, JsonRequestBehavior.AllowGet);
+                List<Guid> managedBlog = (from a in entities.Table_BlogManager
+                                          where a.UserId == result.ID
+                                          select a.BlogTypeId).ToList();
+                List<Guid> managedBBS = (from a in entities.Table_BBSManager
+                                         where a.UserId == result.ID
+                                         select a.BBSTypeId).ToList();
+                return Json(new { userName = result.Name, userImg = result.Photo, managedBlog = managedBlog, managedBBS = managedBBS }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { userName = "", userImg = "app/img/user/01.jpg" }, JsonRequestBehavior.AllowGet);  
         }

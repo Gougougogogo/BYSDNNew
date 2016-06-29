@@ -37,14 +37,13 @@
 </div>
 <div class="modal-body">
     <!-- START dropdown-->
-    <!--<div uib-dropdown="dropdown2" class="pull-right dropdown">
+    <div uib-dropdown="dropdown2" class="pull-right dropdown" ng-if="app.userName == blogContent.PublisherName">
         <button type="button" uib-dropdown-toggle="" class="btn btn-default btn-flat btn-flat-icon"><em class="ion-android-more-vertical"></em></button>
         <ul role="menu" class="dropdown-menu md-dropdown-menu dropdown-menu-right">
-            <li><a href=""><em class="ion-star icon-fw"></em>Favorite</a></li>
-            <li><a href=""><em class="ion-ios-box icon-fw"></em>Archive</a></li>
-            <li><a href="" ng-click="mod.close()"><em class="ion-trash-a icon-fw"></em>Discard</a></li>
+            <li ng-click="edit()"><a href=""><em class="ion-edit icon-fw"></em>Edit</a></li>
+            <li ng-click="delete()"><a href=""><em class="ion-trash-b icon-fw"></em>Delete</a></li>
         </ul>
-    </div>-->
+    </div>
     <!-- END dropdown-->
     <p class="text-muted">{{ blogContent.Date }}</p>
     <div ng-bind-html="blogContent.Content|to_trusted">

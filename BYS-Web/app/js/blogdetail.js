@@ -1,9 +1,13 @@
-﻿angular.module('app.blog').controller('blogDetailController', ['$scope', '$http', '$uibModal', '$state', '$stateParams', function ($scope, $http, $uibModal,$state, $stateParams) {
+﻿angular.module('app.blog').controller('blogDetailController', ['$scope', '$http', '$uibModal', '$state', '$stateParams', '$rootScope', function ($scope, $http, $uibModal, $state, $stateParams, $rootScope) {
     $scope.ItemId = $stateParams.blogTypeId;
     $scope.Items = 0;
     $scope.currentPage = 1;
     $scope.itemCountPerPage = 10;
-    $scope.blogItems;
+    $scope.blogItems = [];
+    $scope.topItems = [];
+    $scope.app = $rootScope.app;
+
+    $scope.isManager = $scope.app.managedBlog.indexOf($scope.ItemId) >= 0 ? true : false;
 
     $scope.publishNew = function () {
         $state.go('app.blog.newpost', { blogTypeId: $stateParams.blogTypeId });
@@ -37,7 +41,18 @@
             },
             success: function (e) {
                 if (e.success) {
-                    $scope.blogItems = e.retData;
+                    $scope.blogItems = [];
+                    $scope.topItems = [];
+                    var items = e.retData;
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].Status == 1) {
+                            $scope.blogItems.push(items[i]);
+                        }
+                        else
+                        {
+                            $scope.topItems.push(items[i]);
+                        }
+                    }
                     $scope.$apply();
                 }
             },
@@ -50,8 +65,8 @@
     getBlogPage();
     getBlogItems();
 
-    $scope.openDetail = function (Id) {
-        var modalBarInstance = $uibModal.open({
+    $scope.openDetail = function (item) {
+        $uibModal.open({
             animation: true,
             templateUrl: 'app/views/blog-detail.tpl.html',
             controller: 'blogDetailDialogController',
@@ -62,21 +77,42 @@
             resolve: {
                 data: function () {
                     return {
-                        blogId: Id
+                        blogId: item.BlogId
                     };
                 }
             }
-        });
-
-        modalBarInstance.result.then(function ( /*data*/) {
+        }).result.then(function (retData) {
             // use data from modal here
+            if (retData.type != undefined && retData.type == 'delete') {
+                $state.reload();
+            }
+
+            if (retData.type != undefined && retData.type == 'edit') {
+                $state.go('app.blog.edit', { blogId:retData.id });
+            }
         }, function () {
             // Modal dismissed
         });
     };
+
+    $scope.setStatus = function (blog, status) {
+        var loader = layer.load(0);
+        $http.post('../Blog/SetBlogStatus', { blogId: blog.BlogId, status: status }).then(
+            function (success) {
+                if (success) {
+                    $state.reload();
+                }
+            },
+            function (error) {
+                layer.msg(error);               
+            }
+        ).finally(function () {
+            layer.close(loader);
+        });
+    };
 }]);
 
-angular.module('app.blog').controller('blogDetailDialogController', ['$uibModalInstance', 'data', '$http', '$scope', '$timeout', '$rootScope', function ($uibModalInstance, data, $http, $scope, $timeout, $rootScope) {
+angular.module('app.blog').controller('blogDetailDialogController', ['$uibModalInstance', 'data', '$http', '$scope','$state' ,'$timeout', '$rootScope', function ($uibModalInstance, data, $http, $scope,$state, $timeout, $rootScope) {
 
     $scope.blogContent;
     $scope.showAttachments = false;
@@ -144,6 +180,32 @@ angular.module('app.blog').controller('blogDetailDialogController', ['$uibModalI
 
     getContent();
     
+    $scope.edit = function () {
+        $uibModalInstance.close({
+            type: 'edit',
+            id: data.blogId
+        });
+    };
+
+    $scope.delete = function () {
+        $http.get('../Blog/DeleteBlog', {
+            params: {
+                blogId: data.blogId
+            }
+        }).success(function (data) {
+            if (data.success) {
+                layer.msg('delete successfully');
+                $uibModalInstance.close({
+                    type : 'delete'
+                });
+            }
+            else
+            {
+                layer.msg(data.errorMessage);
+            }
+        });
+    };
+
     $scope.replyOther = function (item) {
         item.IsCollapsed = !item.IsCollapsed;
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BYSDNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BYSDNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Table_Answer">
           <Key>
             <PropertyRef Name="ID" />
@@ -23,6 +23,21 @@
           <Property Name="QuestionID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FileName" Type="nvarchar" MaxLength="127" Nullable="false" />
           <Property Name="FileSize" Type="nvarchar" MaxLength="63" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_BBSItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BBSTypeName" Type="nvarchar" MaxLength="127" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_BBSManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BBSTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Table_Blog">
           <Key>
@@ -52,6 +67,14 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="2047" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_BlogManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Table_BlogReply">
           <Key>
@@ -99,6 +122,8 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Publisher" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Table_SubBlogReply">
           <Key>
@@ -158,6 +183,548 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Table_BBSManager_Table_BBSItem">
+          <End Role="Table_BBSItem" Type="Self.Table_BBSItem" Multiplicity="1" />
+          <End Role="Table_BBSManager" Type="Self.Table_BBSManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BBSItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BBSManager">
+              <PropertyRef Name="BBSTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BBSManager_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_BBSManager" Type="Self.Table_BBSManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BBSManager">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Blog_Table_BlogItem">
+          <End Role="Table_BlogItem" Type="Self.Table_BlogItem" Multiplicity="1" />
+          <End Role="Table_Blog" Type="Self.Table_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BlogItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Blog">
+              <PropertyRef Name="BlogItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Blog_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_Blog" Type="Self.Table_Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Blog">
+              <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogAttachments_Table_Blog">
+          <End Role="Table_Blog" Type="Self.Table_Blog" Multiplicity="1" />
+          <End Role="Table_BlogAttachments" Type="Self.Table_BlogAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Blog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogAttachments">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogManager_Table_BlogItem">
+          <End Role="Table_BlogItem" Type="Self.Table_BlogItem" Multiplicity="1" />
+          <End Role="Table_BlogManager" Type="Self.Table_BlogManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BlogItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogManager">
+              <PropertyRef Name="BlogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogManager_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_BlogManager" Type="Self.Table_BlogManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogManager">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogReply_Table_Blog">
+          <End Role="Table_Blog" Type="Self.Table_Blog" Multiplicity="1" />
+          <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Blog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogReply">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogReply_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogReply">
+              <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_LogEntity_Table_OperationType">
+          <End Role="Table_OperationType" Type="Self.Table_OperationType" Multiplicity="1" />
+          <End Role="Table_LogEntity" Type="Self.Table_LogEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_OperationType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_LogEntity">
+              <PropertyRef Name="OperationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_OperationLog_Table_LogEntity">
+          <End Role="Table_LogEntity" Type="Self.Table_LogEntity" Multiplicity="1" />
+          <End Role="Table_OperationLog" Type="Self.Table_OperationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_LogEntity">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_OperationLog">
+              <PropertyRef Name="LogEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_OperationLog_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_OperationLog" Type="Self.Table_OperationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_OperationLog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Question_Table_BBSItem">
+          <End Role="Table_BBSItem" Type="Self.Table_BBSItem" Multiplicity="1" />
+          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BBSItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Question">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Question_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Question">
+              <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_SubBlogReply_Table_BlogReply">
+          <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="1" />
+          <End Role="Table_SubBlogReply" Type="Self.Table_SubBlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BlogReply">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_SubBlogReply">
+              <PropertyRef Name="ReplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_SubBlogReply_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_SubBlogReply" Type="Self.Table_SubBlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_SubBlogReply">
+              <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BYSDNModelStoreContainer">
+          <EntitySet Name="Table_Answer" EntityType="Self.Table_Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Attachments" EntityType="Self.Table_Attachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BBSItem" EntityType="Self.Table_BBSItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BBSManager" EntityType="Self.Table_BBSManager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Blog" EntityType="Self.Table_Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BlogAttachments" EntityType="Self.Table_BlogAttachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BlogItem" EntityType="Self.Table_BlogItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BlogManager" EntityType="Self.Table_BlogManager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BlogReply" EntityType="Self.Table_BlogReply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_LogEntity" EntityType="Self.Table_LogEntity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_OperationLog" EntityType="Self.Table_OperationLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_OperationType" EntityType="Self.Table_OperationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Question" EntityType="Self.Table_Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_SubBlogReply" EntityType="Self.Table_SubBlogReply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_User" EntityType="Self.Table_User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Table_Answer_Table_Question" Association="Self.FK_Table_Answer_Table_Question">
+            <End Role="Table_Question" EntitySet="Table_Question" />
+            <End Role="Table_Answer" EntitySet="Table_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Answer_Table_User" Association="Self.FK_Table_Answer_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_Answer" EntitySet="Table_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Attachments_Table_Question" Association="Self.FK_Table_Attachments_Table_Question">
+            <End Role="Table_Question" EntitySet="Table_Question" />
+            <End Role="Table_Attachments" EntitySet="Table_Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BBSManager_Table_BBSItem" Association="Self.FK_Table_BBSManager_Table_BBSItem">
+            <End Role="Table_BBSItem" EntitySet="Table_BBSItem" />
+            <End Role="Table_BBSManager" EntitySet="Table_BBSManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BBSManager_Table_User" Association="Self.FK_Table_BBSManager_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_BBSManager" EntitySet="Table_BBSManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Blog_Table_BlogItem" Association="Self.FK_Table_Blog_Table_BlogItem">
+            <End Role="Table_BlogItem" EntitySet="Table_BlogItem" />
+            <End Role="Table_Blog" EntitySet="Table_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Blog_Table_User" Association="Self.FK_Table_Blog_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_Blog" EntitySet="Table_Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogAttachments_Table_Blog" Association="Self.FK_Table_BlogAttachments_Table_Blog">
+            <End Role="Table_Blog" EntitySet="Table_Blog" />
+            <End Role="Table_BlogAttachments" EntitySet="Table_BlogAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogManager_Table_BlogItem" Association="Self.FK_Table_BlogManager_Table_BlogItem">
+            <End Role="Table_BlogItem" EntitySet="Table_BlogItem" />
+            <End Role="Table_BlogManager" EntitySet="Table_BlogManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogManager_Table_User" Association="Self.FK_Table_BlogManager_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_BlogManager" EntitySet="Table_BlogManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogReply_Table_Blog" Association="Self.FK_Table_BlogReply_Table_Blog">
+            <End Role="Table_Blog" EntitySet="Table_Blog" />
+            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogReply_Table_User" Association="Self.FK_Table_BlogReply_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_LogEntity_Table_OperationType" Association="Self.FK_Table_LogEntity_Table_OperationType">
+            <End Role="Table_OperationType" EntitySet="Table_OperationType" />
+            <End Role="Table_LogEntity" EntitySet="Table_LogEntity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_OperationLog_Table_LogEntity" Association="Self.FK_Table_OperationLog_Table_LogEntity">
+            <End Role="Table_LogEntity" EntitySet="Table_LogEntity" />
+            <End Role="Table_OperationLog" EntitySet="Table_OperationLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_OperationLog_Table_User" Association="Self.FK_Table_OperationLog_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_OperationLog" EntitySet="Table_OperationLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Question_Table_BBSItem" Association="Self.FK_Table_Question_Table_BBSItem">
+            <End Role="Table_BBSItem" EntitySet="Table_BBSItem" />
+            <End Role="Table_Question" EntitySet="Table_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Question_Table_User" Association="Self.FK_Table_Question_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_Question" EntitySet="Table_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_SubBlogReply_Table_BlogReply" Association="Self.FK_Table_SubBlogReply_Table_BlogReply">
+            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
+            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_SubBlogReply_Table_User" Association="Self.FK_Table_SubBlogReply_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BYSDNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Table_Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionID" Type="Guid" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Answer_Table_Question" FromRole="Table_Answer" ToRole="Table_Question" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_Answer_Table_User" FromRole="Table_Answer" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_Attachments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionID" Type="Guid" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FileSize" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Attachments_Table_Question" FromRole="Table_Attachments" ToRole="Table_Question" />
+        </EntityType>
+        <EntityType Name="Table_BBSItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="BBSTypeName" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_BBSManager" Relationship="Self.FK_Table_BBSManager_Table_BBSItem" FromRole="Table_BBSItem" ToRole="Table_BBSManager" />
+          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Question_Table_BBSItem" FromRole="Table_BBSItem" ToRole="Table_Question" />
+        </EntityType>
+        <EntityType Name="Table_BBSManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BBSTypeId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Table_BBSItem" Relationship="Self.FK_Table_BBSManager_Table_BBSItem" FromRole="Table_BBSManager" ToRole="Table_BBSItem" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_BBSManager_Table_User" FromRole="Table_BBSManager" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_Blog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Publisher" Type="Guid" Nullable="false" />
+          <Property Name="BlogItemId" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Table_BlogItem" Relationship="Self.FK_Table_Blog_Table_BlogItem" FromRole="Table_Blog" ToRole="Table_BlogItem" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_Blog_Table_User" FromRole="Table_Blog" ToRole="Table_User" />
+          <NavigationProperty Name="Table_BlogAttachments" Relationship="Self.FK_Table_BlogAttachments_Table_Blog" FromRole="Table_Blog" ToRole="Table_BlogAttachments" />
+          <NavigationProperty Name="Table_BlogReply" Relationship="Self.FK_Table_BlogReply_Table_Blog" FromRole="Table_Blog" ToRole="Table_BlogReply" />
+        </EntityType>
+        <EntityType Name="Table_BlogAttachments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="BlogID" Type="Guid" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FileSize" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_Blog" Relationship="Self.FK_Table_BlogAttachments_Table_Blog" FromRole="Table_BlogAttachments" ToRole="Table_Blog" />
+        </EntityType>
+        <EntityType Name="Table_BlogItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="2047" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_Blog" Relationship="Self.FK_Table_Blog_Table_BlogItem" FromRole="Table_BlogItem" ToRole="Table_Blog" />
+          <NavigationProperty Name="Table_BlogManager" Relationship="Self.FK_Table_BlogManager_Table_BlogItem" FromRole="Table_BlogItem" ToRole="Table_BlogManager" />
+        </EntityType>
+        <EntityType Name="Table_BlogManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogTypeId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Table_BlogItem" Relationship="Self.FK_Table_BlogManager_Table_BlogItem" FromRole="Table_BlogManager" ToRole="Table_BlogItem" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_BlogManager_Table_User" FromRole="Table_BlogManager" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_BlogReply">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="BlogID" Type="Guid" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Table_Blog" Relationship="Self.FK_Table_BlogReply_Table_Blog" FromRole="Table_BlogReply" ToRole="Table_Blog" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_BlogReply_Table_User" FromRole="Table_BlogReply" ToRole="Table_User" />
+          <NavigationProperty Name="Table_SubBlogReply" Relationship="Self.FK_Table_SubBlogReply_Table_BlogReply" FromRole="Table_BlogReply" ToRole="Table_SubBlogReply" />
+        </EntityType>
+        <EntityType Name="Table_LogEntity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="OperationTypeID" Type="Guid" Nullable="false" />
+          <Property Name="LogType" Type="String" MaxLength="31" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OriginValue" Type="String" MaxLength="511" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="511" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_OperationType" Relationship="Self.FK_Table_LogEntity_Table_OperationType" FromRole="Table_LogEntity" ToRole="Table_OperationType" />
+          <NavigationProperty Name="Table_OperationLog" Relationship="Self.FK_Table_OperationLog_Table_LogEntity" FromRole="Table_LogEntity" ToRole="Table_OperationLog" />
+        </EntityType>
+        <EntityType Name="Table_OperationLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LogEntityID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Table_LogEntity" Relationship="Self.FK_Table_OperationLog_Table_LogEntity" FromRole="Table_OperationLog" ToRole="Table_LogEntity" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_OperationLog_Table_User" FromRole="Table_OperationLog" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_OperationType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table_LogEntity" Relationship="Self.FK_Table_LogEntity_Table_OperationType" FromRole="Table_OperationType" ToRole="Table_LogEntity" />
+        </EntityType>
+        <EntityType Name="Table_Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Tittle" Type="String" MaxLength="254" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tags" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="Guid" Nullable="false" />
+          <Property Name="TypeId" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Table_Answer" Relationship="Self.FK_Table_Answer_Table_Question" FromRole="Table_Question" ToRole="Table_Answer" />
+          <NavigationProperty Name="Table_Attachments" Relationship="Self.FK_Table_Attachments_Table_Question" FromRole="Table_Question" ToRole="Table_Attachments" />
+          <NavigationProperty Name="Table_BBSItem" Relationship="Self.FK_Table_Question_Table_BBSItem" FromRole="Table_Question" ToRole="Table_BBSItem" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_Question_Table_User" FromRole="Table_Question" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_SubBlogReply">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ReplyID" Type="Guid" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Table_BlogReply" Relationship="Self.FK_Table_SubBlogReply_Table_BlogReply" FromRole="Table_SubBlogReply" ToRole="Table_BlogReply" />
+          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_SubBlogReply_Table_User" FromRole="Table_SubBlogReply" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sexy" Type="Boolean" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="511" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="String" MaxLength="511" FixedLength="false" Unicode="false" />
+          <Property Name="Rate" Type="Int32" />
+          <NavigationProperty Name="Table_Answer" Relationship="Self.FK_Table_Answer_Table_User" FromRole="Table_User" ToRole="Table_Answer" />
+          <NavigationProperty Name="Table_BBSManager" Relationship="Self.FK_Table_BBSManager_Table_User" FromRole="Table_User" ToRole="Table_BBSManager" />
+          <NavigationProperty Name="Table_Blog" Relationship="Self.FK_Table_Blog_Table_User" FromRole="Table_User" ToRole="Table_Blog" />
+          <NavigationProperty Name="Table_BlogManager" Relationship="Self.FK_Table_BlogManager_Table_User" FromRole="Table_User" ToRole="Table_BlogManager" />
+          <NavigationProperty Name="Table_BlogReply" Relationship="Self.FK_Table_BlogReply_Table_User" FromRole="Table_User" ToRole="Table_BlogReply" />
+          <NavigationProperty Name="Table_OperationLog" Relationship="Self.FK_Table_OperationLog_Table_User" FromRole="Table_User" ToRole="Table_OperationLog" />
+          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Question_Table_User" FromRole="Table_User" ToRole="Table_Question" />
+          <NavigationProperty Name="Table_SubBlogReply" Relationship="Self.FK_Table_SubBlogReply_Table_User" FromRole="Table_User" ToRole="Table_SubBlogReply" />
+        </EntityType>
+        <Association Name="FK_Table_Answer_Table_Question">
+          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="1" />
+          <End Role="Table_Answer" Type="Self.Table_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Answer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Answer_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_Answer" Type="Self.Table_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Answer">
+              <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Attachments_Table_Question">
+          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="1" />
+          <End Role="Table_Attachments" Type="Self.Table_Attachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Attachments">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BBSManager_Table_BBSItem">
+          <End Role="Table_BBSItem" Type="Self.Table_BBSItem" Multiplicity="1" />
+          <End Role="Table_BBSManager" Type="Self.Table_BBSManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BBSItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BBSManager">
+              <PropertyRef Name="BBSTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Question_Table_BBSItem">
+          <End Role="Table_BBSItem" Type="Self.Table_BBSItem" Multiplicity="1" />
+          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BBSItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_Question">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BBSManager_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_BBSManager" Type="Self.Table_BBSManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BBSManager">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table_Blog_Table_BlogItem">
           <End Role="Table_BlogItem" Type="Self.Table_BlogItem" Multiplicity="1" />
           <End Role="Table_Blog" Type="Self.Table_Blog" Multiplicity="*" />
@@ -206,6 +773,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Table_BlogManager_Table_BlogItem">
+          <End Role="Table_BlogItem" Type="Self.Table_BlogItem" Multiplicity="1" />
+          <End Role="Table_BlogManager" Type="Self.Table_BlogManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BlogItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogManager">
+              <PropertyRef Name="BlogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_BlogManager_Table_User">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="Table_BlogManager" Type="Self.Table_BlogManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_BlogManager">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table_BlogReply_Table_User">
           <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
           <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="*" />
@@ -215,6 +806,18 @@
             </Principal>
             <Dependent Role="Table_BlogReply">
               <PropertyRef Name="Publisher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_SubBlogReply_Table_BlogReply">
+          <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="1" />
+          <End Role="Table_SubBlogReply" Type="Self.Table_SubBlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_BlogReply">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Table_SubBlogReply">
+              <PropertyRef Name="ReplyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -266,18 +869,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_SubBlogReply_Table_BlogReply">
-          <End Role="Table_BlogReply" Type="Self.Table_BlogReply" Multiplicity="1" />
-          <End Role="Table_SubBlogReply" Type="Self.Table_SubBlogReply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_BlogReply">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_SubBlogReply">
-              <PropertyRef Name="ReplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Table_SubBlogReply_Table_User">
           <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
           <End Role="Table_SubBlogReply" Type="Self.Table_SubBlogReply" Multiplicity="*" />
@@ -290,19 +881,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BYSDNModelStoreContainer">
-          <EntitySet Name="Table_Answer" EntityType="Self.Table_Answer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_Attachments" EntityType="Self.Table_Attachments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_Blog" EntityType="Self.Table_Blog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_BlogAttachments" EntityType="Self.Table_BlogAttachments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_BlogItem" EntityType="Self.Table_BlogItem" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_BlogReply" EntityType="Self.Table_BlogReply" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_LogEntity" EntityType="Self.Table_LogEntity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_OperationLog" EntityType="Self.Table_OperationLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_OperationType" EntityType="Self.Table_OperationType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_Question" EntityType="Self.Table_Question" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_SubBlogReply" EntityType="Self.Table_SubBlogReply" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table_User" EntityType="Self.Table_User" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="BYSDNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Table_Answer" EntityType="Self.Table_Answer" />
+          <EntitySet Name="Table_Attachments" EntityType="Self.Table_Attachments" />
+          <EntitySet Name="Table_BBSItem" EntityType="Self.Table_BBSItem" />
+          <EntitySet Name="Table_BBSManager" EntityType="Self.Table_BBSManager" />
+          <EntitySet Name="Table_Blog" EntityType="Self.Table_Blog" />
+          <EntitySet Name="Table_BlogAttachments" EntityType="Self.Table_BlogAttachments" />
+          <EntitySet Name="Table_BlogItem" EntityType="Self.Table_BlogItem" />
+          <EntitySet Name="Table_BlogManager" EntityType="Self.Table_BlogManager" />
+          <EntitySet Name="Table_BlogReply" EntityType="Self.Table_BlogReply" />
+          <EntitySet Name="Table_LogEntity" EntityType="Self.Table_LogEntity" />
+          <EntitySet Name="Table_OperationLog" EntityType="Self.Table_OperationLog" />
+          <EntitySet Name="Table_OperationType" EntityType="Self.Table_OperationType" />
+          <EntitySet Name="Table_Question" EntityType="Self.Table_Question" />
+          <EntitySet Name="Table_SubBlogReply" EntityType="Self.Table_SubBlogReply" />
+          <EntitySet Name="Table_User" EntityType="Self.Table_User" />
           <AssociationSet Name="FK_Table_Answer_Table_Question" Association="Self.FK_Table_Answer_Table_Question">
             <End Role="Table_Question" EntitySet="Table_Question" />
             <End Role="Table_Answer" EntitySet="Table_Answer" />
@@ -314,6 +908,18 @@
           <AssociationSet Name="FK_Table_Attachments_Table_Question" Association="Self.FK_Table_Attachments_Table_Question">
             <End Role="Table_Question" EntitySet="Table_Question" />
             <End Role="Table_Attachments" EntitySet="Table_Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BBSManager_Table_BBSItem" Association="Self.FK_Table_BBSManager_Table_BBSItem">
+            <End Role="Table_BBSItem" EntitySet="Table_BBSItem" />
+            <End Role="Table_BBSManager" EntitySet="Table_BBSManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Question_Table_BBSItem" Association="Self.FK_Table_Question_Table_BBSItem">
+            <End Role="Table_BBSItem" EntitySet="Table_BBSItem" />
+            <End Role="Table_Question" EntitySet="Table_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BBSManager_Table_User" Association="Self.FK_Table_BBSManager_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_BBSManager" EntitySet="Table_BBSManager" />
           </AssociationSet>
           <AssociationSet Name="FK_Table_Blog_Table_BlogItem" Association="Self.FK_Table_Blog_Table_BlogItem">
             <End Role="Table_BlogItem" EntitySet="Table_BlogItem" />
@@ -331,9 +937,21 @@
             <End Role="Table_Blog" EntitySet="Table_Blog" />
             <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
           </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogManager_Table_BlogItem" Association="Self.FK_Table_BlogManager_Table_BlogItem">
+            <End Role="Table_BlogItem" EntitySet="Table_BlogItem" />
+            <End Role="Table_BlogManager" EntitySet="Table_BlogManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_BlogManager_Table_User" Association="Self.FK_Table_BlogManager_Table_User">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Table_BlogManager" EntitySet="Table_BlogManager" />
+          </AssociationSet>
           <AssociationSet Name="FK_Table_BlogReply_Table_User" Association="Self.FK_Table_BlogReply_Table_User">
             <End Role="Table_User" EntitySet="Table_User" />
             <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_SubBlogReply_Table_BlogReply" Association="Self.FK_Table_SubBlogReply_Table_BlogReply">
+            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
+            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
           </AssociationSet>
           <AssociationSet Name="FK_Table_LogEntity_Table_OperationType" Association="Self.FK_Table_LogEntity_Table_OperationType">
             <End Role="Table_OperationType" EntitySet="Table_OperationType" />
@@ -350,403 +968,12 @@
           <AssociationSet Name="FK_Table_Question_Table_User" Association="Self.FK_Table_Question_Table_User">
             <End Role="Table_User" EntitySet="Table_User" />
             <End Role="Table_Question" EntitySet="Table_Question" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_SubBlogReply_Table_BlogReply" Association="Self.FK_Table_SubBlogReply_Table_BlogReply">
-            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
-            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
           </AssociationSet>
           <AssociationSet Name="FK_Table_SubBlogReply_Table_User" Association="Self.FK_Table_SubBlogReply_Table_User">
             <End Role="Table_User" EntitySet="Table_User" />
             <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="BYSDNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Table_Answer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="QuestionID" Type="Guid" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Publisher" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Answer_Table_Question" FromRole="Table_Answer" ToRole="Table_Question" />
-          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_Answer_Table_User" FromRole="Table_Answer" ToRole="Table_User" />
-        </EntityType>
-        <EntityType Name="Table_Attachments">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="QuestionID" Type="Guid" Nullable="false" />
-          <Property Name="FileName" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FileSize" Type="String" MaxLength="63" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Attachments_Table_Question" FromRole="Table_Attachments" ToRole="Table_Question" />
-        </EntityType>
-        <EntityType Name="Table_LogEntity">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="OperationTypeID" Type="Guid" Nullable="false" />
-          <Property Name="LogType" Type="String" MaxLength="31" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OriginValue" Type="String" MaxLength="511" FixedLength="false" Unicode="true" />
-          <Property Name="NewValue" Type="String" MaxLength="511" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Table_OperationType" Relationship="Self.FK_Table_LogEntity_Table_OperationType" FromRole="Table_LogEntity" ToRole="Table_OperationType" />
-          <NavigationProperty Name="Table_OperationLog" Relationship="Self.FK_Table_OperationLog_Table_LogEntity" FromRole="Table_LogEntity" ToRole="Table_OperationLog" />
-        </EntityType>
-        <EntityType Name="Table_OperationLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LogEntityID" Type="Guid" Nullable="false" />
-          <Property Name="UserID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Table_LogEntity" Relationship="Self.FK_Table_OperationLog_Table_LogEntity" FromRole="Table_OperationLog" ToRole="Table_LogEntity" />
-          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_OperationLog_Table_User" FromRole="Table_OperationLog" ToRole="Table_User" />
-        </EntityType>
-        <EntityType Name="Table_OperationType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="127" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Table_LogEntity" Relationship="Self.FK_Table_LogEntity_Table_OperationType" FromRole="Table_OperationType" ToRole="Table_LogEntity" />
-        </EntityType>
-        <EntityType Name="Table_Question">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Tittle" Type="String" MaxLength="254" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Tags" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Publisher" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Table_Answer" Relationship="Self.FK_Table_Answer_Table_Question" FromRole="Table_Question" ToRole="Table_Answer" />
-          <NavigationProperty Name="Table_Attachments" Relationship="Self.FK_Table_Attachments_Table_Question" FromRole="Table_Question" ToRole="Table_Attachments" />
-          <NavigationProperty Name="Table_User" Relationship="Self.FK_Table_Question_Table_User" FromRole="Table_Question" ToRole="Table_User" />
-        </EntityType>
-        <EntityType Name="Table_User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Sexy" Type="Boolean" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="511" FixedLength="false" Unicode="false" />
-          <Property Name="Photo" Type="String" MaxLength="511" FixedLength="false" Unicode="false" />
-          <Property Name="Rate" Type="Int32" />
-          <NavigationProperty Name="Table_Answer" Relationship="Self.FK_Table_Answer_Table_User" FromRole="Table_User" ToRole="Table_Answer" />
-          <NavigationProperty Name="Table_OperationLog" Relationship="Self.FK_Table_OperationLog_Table_User" FromRole="Table_User" ToRole="Table_OperationLog" />
-          <NavigationProperty Name="Table_Question" Relationship="Self.FK_Table_Question_Table_User" FromRole="Table_User" ToRole="Table_Question" />
-          <NavigationProperty Name="Table_Blog" Relationship="BYSDNModel.FK_Table_Blog_Table_User" FromRole="Table_User" ToRole="Table_Blog" />
-          <NavigationProperty Name="Table_BlogReply" Relationship="BYSDNModel.FK_Table_BlogReply_Table_User" FromRole="Table_User" ToRole="Table_BlogReply" />
-          <NavigationProperty Name="Table_SubBlogReply" Relationship="BYSDNModel.FK_Table_SubBlogReply_Table_User" FromRole="Table_User" ToRole="Table_SubBlogReply" />
-        </EntityType>
-        <Association Name="FK_Table_Answer_Table_Question">
-          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="1" />
-          <End Role="Table_Answer" Type="Self.Table_Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_Question">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Answer">
-              <PropertyRef Name="QuestionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_Answer_Table_User">
-          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
-          <End Role="Table_Answer" Type="Self.Table_Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Answer">
-              <PropertyRef Name="Publisher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_Attachments_Table_Question">
-          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="1" />
-          <End Role="Table_Attachments" Type="Self.Table_Attachments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_Question">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Attachments">
-              <PropertyRef Name="QuestionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_LogEntity_Table_OperationType">
-          <End Role="Table_OperationType" Type="Self.Table_OperationType" Multiplicity="1" />
-          <End Role="Table_LogEntity" Type="Self.Table_LogEntity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_OperationType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_LogEntity">
-              <PropertyRef Name="OperationTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_OperationLog_Table_LogEntity">
-          <End Role="Table_LogEntity" Type="Self.Table_LogEntity" Multiplicity="1" />
-          <End Role="Table_OperationLog" Type="Self.Table_OperationLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_LogEntity">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_OperationLog">
-              <PropertyRef Name="LogEntityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_OperationLog_Table_User">
-          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
-          <End Role="Table_OperationLog" Type="Self.Table_OperationLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_OperationLog">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_Question_Table_User">
-          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
-          <End Role="Table_Question" Type="Self.Table_Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Question">
-              <PropertyRef Name="Publisher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="BYSDNEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Table_Answer" EntityType="Self.Table_Answer" />
-          <EntitySet Name="Table_Attachments" EntityType="Self.Table_Attachments" />
-          <EntitySet Name="Table_LogEntity" EntityType="Self.Table_LogEntity" />
-          <EntitySet Name="Table_OperationLog" EntityType="Self.Table_OperationLog" />
-          <EntitySet Name="Table_OperationType" EntityType="Self.Table_OperationType" />
-          <EntitySet Name="Table_Question" EntityType="Self.Table_Question" />
-          <EntitySet Name="Table_User" EntityType="Self.Table_User" />
-          <AssociationSet Name="FK_Table_Answer_Table_Question" Association="Self.FK_Table_Answer_Table_Question">
-            <End Role="Table_Question" EntitySet="Table_Question" />
-            <End Role="Table_Answer" EntitySet="Table_Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_Answer_Table_User" Association="Self.FK_Table_Answer_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_Answer" EntitySet="Table_Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_Attachments_Table_Question" Association="Self.FK_Table_Attachments_Table_Question">
-            <End Role="Table_Question" EntitySet="Table_Question" />
-            <End Role="Table_Attachments" EntitySet="Table_Attachments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_LogEntity_Table_OperationType" Association="Self.FK_Table_LogEntity_Table_OperationType">
-            <End Role="Table_OperationType" EntitySet="Table_OperationType" />
-            <End Role="Table_LogEntity" EntitySet="Table_LogEntity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_OperationLog_Table_LogEntity" Association="Self.FK_Table_OperationLog_Table_LogEntity">
-            <End Role="Table_LogEntity" EntitySet="Table_LogEntity" />
-            <End Role="Table_OperationLog" EntitySet="Table_OperationLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_OperationLog_Table_User" Association="Self.FK_Table_OperationLog_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_OperationLog" EntitySet="Table_OperationLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_Question_Table_User" Association="Self.FK_Table_Question_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_Question" EntitySet="Table_Question" />
-          </AssociationSet>
-          <EntitySet Name="Table_Blog" EntityType="BYSDNModel.Table_Blog" />
-          <EntitySet Name="Table_BlogItem" EntityType="BYSDNModel.Table_BlogItem" />
-          <AssociationSet Name="FK_Table_Blog_Table_BlogItem" Association="BYSDNModel.FK_Table_Blog_Table_BlogItem">
-            <End Role="Table_BlogItem" EntitySet="Table_BlogItem" />
-            <End Role="Table_Blog" EntitySet="Table_Blog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_Blog_Table_User" Association="BYSDNModel.FK_Table_Blog_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_Blog" EntitySet="Table_Blog" />
-          </AssociationSet>
-          <EntitySet Name="Table_BlogAttachments" EntityType="BYSDNModel.Table_BlogAttachments" />
-          <AssociationSet Name="FK_Table_BlogAttachments_Table_Blog" Association="BYSDNModel.FK_Table_BlogAttachments_Table_Blog">
-            <End Role="Table_Blog" EntitySet="Table_Blog" />
-            <End Role="Table_BlogAttachments" EntitySet="Table_BlogAttachments" />
-          </AssociationSet>
-          <EntitySet Name="Table_BlogReply" EntityType="BYSDNModel.Table_BlogReply" />
-          <EntitySet Name="Table_SubBlogReply" EntityType="BYSDNModel.Table_SubBlogReply" />
-          <AssociationSet Name="FK_Table_BlogReply_Table_Blog" Association="BYSDNModel.FK_Table_BlogReply_Table_Blog">
-            <End Role="Table_Blog" EntitySet="Table_Blog" />
-            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_BlogReply_Table_User" Association="BYSDNModel.FK_Table_BlogReply_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_SubBlogReply_Table_BlogReply" Association="BYSDNModel.FK_Table_SubBlogReply_Table_BlogReply">
-            <End Role="Table_BlogReply" EntitySet="Table_BlogReply" />
-            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_SubBlogReply_Table_User" Association="BYSDNModel.FK_Table_SubBlogReply_Table_User">
-            <End Role="Table_User" EntitySet="Table_User" />
-            <End Role="Table_SubBlogReply" EntitySet="Table_SubBlogReply" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Table_Blog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Publisher" Type="Guid" Nullable="false" />
-          <Property Name="BlogItemId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Table_BlogItem" Relationship="BYSDNModel.FK_Table_Blog_Table_BlogItem" FromRole="Table_Blog" ToRole="Table_BlogItem" />
-          <NavigationProperty Name="Table_User" Relationship="BYSDNModel.FK_Table_Blog_Table_User" FromRole="Table_Blog" ToRole="Table_User" />
-          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Table_BlogAttachments" Relationship="BYSDNModel.FK_Table_BlogAttachments_Table_Blog" FromRole="Table_Blog" ToRole="Table_BlogAttachments" />
-          <NavigationProperty Name="Table_BlogReply" Relationship="BYSDNModel.FK_Table_BlogReply_Table_Blog" FromRole="Table_Blog" ToRole="Table_BlogReply" />
-        </EntityType>
-        <EntityType Name="Table_BlogItem">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="2047" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Table_Blog" Relationship="BYSDNModel.FK_Table_Blog_Table_BlogItem" FromRole="Table_BlogItem" ToRole="Table_Blog" />
-        </EntityType>
-        <Association Name="FK_Table_Blog_Table_BlogItem">
-          <End Type="BYSDNModel.Table_BlogItem" Role="Table_BlogItem" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_Blog" Role="Table_Blog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_BlogItem">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Blog">
-              <PropertyRef Name="BlogItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_Blog_Table_User">
-          <End Type="BYSDNModel.Table_User" Role="Table_User" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_Blog" Role="Table_Blog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_Blog">
-              <PropertyRef Name="Publisher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Table_BlogAttachments">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="BlogID" Type="Guid" Nullable="false" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="true" />
-          <Property Name="FileSize" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Table_Blog" Relationship="BYSDNModel.FK_Table_BlogAttachments_Table_Blog" FromRole="Table_BlogAttachments" ToRole="Table_Blog" />
-        </EntityType>
-        <Association Name="FK_Table_BlogAttachments_Table_Blog">
-          <End Type="BYSDNModel.Table_Blog" Role="Table_Blog" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_BlogAttachments" Role="Table_BlogAttachments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_Blog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_BlogAttachments">
-              <PropertyRef Name="BlogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Table_BlogReply">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="BlogID" Type="Guid" Nullable="false" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Publisher" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Table_Blog" Relationship="BYSDNModel.FK_Table_BlogReply_Table_Blog" FromRole="Table_BlogReply" ToRole="Table_Blog" />
-          <NavigationProperty Name="Table_User" Relationship="BYSDNModel.FK_Table_BlogReply_Table_User" FromRole="Table_BlogReply" ToRole="Table_User" />
-          <NavigationProperty Name="Table_SubBlogReply" Relationship="BYSDNModel.FK_Table_SubBlogReply_Table_BlogReply" FromRole="Table_BlogReply" ToRole="Table_SubBlogReply" />
-        </EntityType>
-        <EntityType Name="Table_SubBlogReply">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="ReplyID" Type="Guid" Nullable="false" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Publisher" Type="Guid" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Table_BlogReply" Relationship="BYSDNModel.FK_Table_SubBlogReply_Table_BlogReply" FromRole="Table_SubBlogReply" ToRole="Table_BlogReply" />
-          <NavigationProperty Name="Table_User" Relationship="BYSDNModel.FK_Table_SubBlogReply_Table_User" FromRole="Table_SubBlogReply" ToRole="Table_User" />
-        </EntityType>
-        <Association Name="FK_Table_BlogReply_Table_Blog">
-          <End Type="BYSDNModel.Table_Blog" Role="Table_Blog" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_BlogReply" Role="Table_BlogReply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_Blog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_BlogReply">
-              <PropertyRef Name="BlogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_BlogReply_Table_User">
-          <End Type="BYSDNModel.Table_User" Role="Table_User" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_BlogReply" Role="Table_BlogReply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_BlogReply">
-              <PropertyRef Name="Publisher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_SubBlogReply_Table_BlogReply">
-          <End Type="BYSDNModel.Table_BlogReply" Role="Table_BlogReply" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_SubBlogReply" Role="Table_SubBlogReply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_BlogReply">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_SubBlogReply">
-              <PropertyRef Name="ReplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_SubBlogReply_Table_User">
-          <End Type="BYSDNModel.Table_User" Role="Table_User" Multiplicity="1" />
-          <End Type="BYSDNModel.Table_SubBlogReply" Role="Table_SubBlogReply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Table_User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Table_SubBlogReply">
-              <PropertyRef Name="Publisher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -771,6 +998,75 @@
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BBSItem">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BBSItem">
+              <MappingFragment StoreEntitySet="Table_BBSItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BBSTypeName" ColumnName="BBSTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BBSManager">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BBSManager">
+              <MappingFragment StoreEntitySet="Table_BBSManager">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BBSTypeId" ColumnName="BBSTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Blog">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_Blog">
+              <MappingFragment StoreEntitySet="Table_Blog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="BlogItemId" ColumnName="BlogItemId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BlogAttachments">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogAttachments">
+              <MappingFragment StoreEntitySet="Table_BlogAttachments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BlogItem">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogItem">
+              <MappingFragment StoreEntitySet="Table_BlogItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BlogManager">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogManager">
+              <MappingFragment StoreEntitySet="Table_BlogManager">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BlogTypeId" ColumnName="BlogTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BlogReply">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogReply">
+              <MappingFragment StoreEntitySet="Table_BlogReply">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -812,6 +1108,19 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_SubBlogReply">
+            <EntityTypeMapping TypeName="BYSDNModel.Table_SubBlogReply">
+              <MappingFragment StoreEntitySet="Table_SubBlogReply">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -825,60 +1134,6 @@
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Table_Blog">
-            <EntityTypeMapping TypeName="BYSDNModel.Table_Blog">
-              <MappingFragment StoreEntitySet="Table_Blog">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="BlogItemId" ColumnName="BlogItemId" />
-                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Table_BlogItem">
-            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogItem">
-              <MappingFragment StoreEntitySet="Table_BlogItem">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Table_BlogAttachments">
-            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogAttachments">
-              <MappingFragment StoreEntitySet="Table_BlogAttachments">
-                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Table_BlogReply">
-            <EntityTypeMapping TypeName="BYSDNModel.Table_BlogReply">
-              <MappingFragment StoreEntitySet="Table_BlogReply">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Table_SubBlogReply">
-            <EntityTypeMapping TypeName="BYSDNModel.Table_SubBlogReply">
-              <MappingFragment StoreEntitySet="Table_SubBlogReply">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

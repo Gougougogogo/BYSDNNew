@@ -11,6 +11,8 @@ namespace BYSDN.Models
         public string BBSId { get; set; }
         public string PublishDate { get; set; }
         public string UserImage { get; set; }
+        public string UserName { get; set; }
         public string Brief { get; set; }
+        public int Status { get; set; }
     }
 }

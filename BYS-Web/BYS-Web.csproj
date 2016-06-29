@@ -182,6 +182,7 @@
     <Compile Include="Controllers\BBSController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entity\BYSDNEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -197,7 +198,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BYSDNEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Entity\Table_Answer.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_Attachments.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_BBSItem.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_BBSManager.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Table_Blog.cs">
       <DependentUpon>BYSDNEntities.tt</DependentUpon>
     </Compile>
@@ -207,10 +219,28 @@
     <Compile Include="Entity\Table_BlogItem.cs">
       <DependentUpon>BYSDNEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Table_BlogManager.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Table_BlogReply.cs">
       <DependentUpon>BYSDNEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Table_LogEntity.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_OperationLog.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_OperationType.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_Question.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Table_SubBlogReply.cs">
+      <DependentUpon>BYSDNEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Table_User.cs">
       <DependentUpon>BYSDNEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -231,27 +261,6 @@
     <Compile Include="Models\SummaryModel.cs" />
     <Compile Include="Models\TimeLineBodyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entity\Table_Answer.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_Attachments.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_LogEntity.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_OperationLog.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_OperationType.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_Question.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Table_User.cs">
-      <DependentUpon>BYSDNEntities.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -290,14 +299,18 @@
     <Content Include="app\js\app.js" />
     <Content Include="app\js\bbsdetail.js" />
     <Content Include="app\js\bbshome.js" />
+    <Content Include="app\js\bbssearch.js" />
     <Content Include="app\js\blogdetail.js" />
     <Content Include="app\js\bloghome.js" />
     <Content Include="app\js\blogPost.js" />
+    <Content Include="app\js\editblog.js" />
     <Content Include="app\js\newpost.js" />
     <Content Include="app\views\bbs-detail.html" />
     <Content Include="app\views\bbs-home.html" />
+    <Content Include="app\views\bbs-search.html" />
     <Content Include="app\views\blog-detail.html" />
     <Content Include="app\views\blog-detail.tpl.html" />
+    <Content Include="app\views\blog-edit.html" />
     <Content Include="app\views\blog-home.html" />
     <Content Include="app\views\blog-new.tpl.html" />
     <Content Include="app\views\core.layout.html" />
@@ -1182,17 +1195,6 @@
     <Content Include="vendor\ionicons\fonts\ionicons.woff" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Entity\BYSDNEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BYSDNEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Entity\BYSDNEntities.edmx.diagram">
-      <DependentUpon>BYSDNEntities.edmx</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -1308,6 +1310,13 @@
     <Content Include="Views\User\Registe.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Entity\BYSDNEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BYSDNEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entity\BYSDNEntities.edmx.diagram">
+      <DependentUpon>BYSDNEntities.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Local File.pubxml" />
     <Content Include="vendor\bootstrap\dist\css\less\.csscomb.json" />
     <Content Include="vendor\bootstrap\dist\css\less\.csslintrc" />

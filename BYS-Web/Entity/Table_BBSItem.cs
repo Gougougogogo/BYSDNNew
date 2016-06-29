@@ -12,19 +12,18 @@ namespace BYS_Web.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Table_BlogItem
+    public partial class Table_BBSItem
     {
-        public Table_BlogItem()
+        public Table_BBSItem()
         {
-            this.Table_Blog = new HashSet<Table_Blog>();
-            this.Table_BlogManager = new HashSet<Table_BlogManager>();
+            this.Table_BBSManager = new HashSet<Table_BBSManager>();
+            this.Table_Question = new HashSet<Table_Question>();
         }
     
         public System.Guid ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string BBSTypeName { get; set; }
     
-        public virtual ICollection<Table_Blog> Table_Blog { get; set; }
-        public virtual ICollection<Table_BlogManager> Table_BlogManager { get; set; }
+        public virtual ICollection<Table_BBSManager> Table_BBSManager { get; set; }
+        public virtual ICollection<Table_Question> Table_Question { get; set; }
     }
 }

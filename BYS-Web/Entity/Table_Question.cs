@@ -26,9 +26,12 @@ namespace BYS_Web.Entity
         public System.DateTime Date { get; set; }
         public string Content { get; set; }
         public System.Guid Publisher { get; set; }
+        public System.Guid TypeId { get; set; }
+        public int Status { get; set; }
     
         public virtual ICollection<Table_Answer> Table_Answer { get; set; }
         public virtual ICollection<Table_Attachments> Table_Attachments { get; set; }
+        public virtual Table_BBSItem Table_BBSItem { get; set; }
         public virtual Table_User Table_User { get; set; }
     }
 }

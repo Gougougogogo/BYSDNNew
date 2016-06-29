@@ -87,7 +87,7 @@ namespace BYSDN.Lucene
             Query query = parser.Parse(key);
 
             //Get highlighter 
-            IFormatter formatter = new SimpleHTMLFormatter("<span style=\"font-weight:bold;\">", "</span>");
+            IFormatter formatter = new SimpleHTMLFormatter("<span style=\"font-weight:bold; background-color:yellow \">", "</span>");
             SimpleFragmenter fragmenter = new SimpleFragmenter(360);
             QueryScorer scorer = new QueryScorer(query);
             Highlighter highlighter = new Highlighter(formatter, scorer);
@@ -101,7 +101,7 @@ namespace BYSDN.Lucene
                 Document doc = searcher.Doc(hits.ScoreDocs[i].Doc);
 
                 TokenStream stream = analyzer.TokenStream("", new StringReader(doc.Get("content")));
-                String sample = highlighter.GetBestFragments(stream, doc.Get("content"), 2, "...");
+                String sample = highlighter.GetBestFragments(stream, doc.Get("content"), 5, "...");
 
                 result.Add(new SearchResult(doc,sample,hits.ScoreDocs[i].Score));
             }

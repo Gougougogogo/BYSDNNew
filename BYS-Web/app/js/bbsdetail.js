@@ -34,6 +34,10 @@
         return result;
     }
 
+    $scope.test = function () {
+        tinymce.activeEditor.setContent($scope.detail.Content , {format: 'raw'});
+    };
+
     function getDetailBody() {
         var load = layer.load(0);
         $http.get('../BBS/GetBBSDetail', {

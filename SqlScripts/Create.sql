@@ -1,14 +1,14 @@
 USE [master]
 GO
-/****** Object:  Database [BYSDN]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Database [BYSDN]    Script Date: 6/30/2016 4:18:12 PM ******/
 CREATE DATABASE [BYSDN]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'BYSDN', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\BYSDN.mdf' , SIZE = 17408KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+( NAME = N'BYSDN', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\BYSDN.mdf' , SIZE = 17408KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'BYSDN_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\BYSDN_log.ldf' , SIZE = 9216KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'BYSDN_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\BYSDN_log.ldf' , SIZE = 9216KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
-ALTER DATABASE [BYSDN] SET COMPATIBILITY_LEVEL = 110
+ALTER DATABASE [BYSDN] SET COMPATIBILITY_LEVEL = 120
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
@@ -26,8 +26,6 @@ GO
 ALTER DATABASE [BYSDN] SET ARITHABORT OFF 
 GO
 ALTER DATABASE [BYSDN] SET AUTO_CLOSE OFF 
-GO
-ALTER DATABASE [BYSDN] SET AUTO_CREATE_STATISTICS ON 
 GO
 ALTER DATABASE [BYSDN] SET AUTO_SHRINK OFF 
 GO
@@ -73,11 +71,22 @@ ALTER DATABASE [BYSDN] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF )
 GO
 ALTER DATABASE [BYSDN] SET TARGET_RECOVERY_TIME = 0 SECONDS 
 GO
+ALTER DATABASE [BYSDN] SET DELAYED_DURABILITY = DISABLED 
+GO
 EXEC sys.sp_db_vardecimal_storage_format N'BYSDN', N'ON'
 GO
 USE [BYSDN]
 GO
-/****** Object:  Table [dbo].[Table_Answer]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  User [FAREAST\v-pauwan]    Script Date: 6/30/2016 4:18:12 PM ******/
+CREATE USER [FAREAST\v-pauwan] FOR LOGIN [FAREAST\v-pauwan] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [FAREAST\v-pauwan]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [FAREAST\v-pauwan]
+GO
+ALTER ROLE [db_denydatareader] ADD MEMBER [FAREAST\v-pauwan]
+GO
+/****** Object:  Table [dbo].[Table_Answer]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -95,7 +104,7 @@ CREATE TABLE [dbo].[Table_Answer](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_Attachments]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_Attachments]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -112,7 +121,38 @@ CREATE TABLE [dbo].[Table_Attachments](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_Blog]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_BBSItem]    Script Date: 6/30/2016 4:18:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table_BBSItem](
+	[ID] [uniqueidentifier] NOT NULL,
+	[BBSTypeName] [nvarchar](127) NOT NULL,
+ CONSTRAINT [PK_BBSItem] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Table_BBSManager]    Script Date: 6/30/2016 4:18:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table_BBSManager](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BBSTypeId] [uniqueidentifier] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+ CONSTRAINT [PK_Table_BBSManager] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Table_Blog]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +172,7 @@ CREATE TABLE [dbo].[Table_Blog](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_BlogAttachments]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_BlogAttachments]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +189,7 @@ CREATE TABLE [dbo].[Table_BlogAttachments](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_BlogItem]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_BlogItem]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -165,7 +205,41 @@ CREATE TABLE [dbo].[Table_BlogItem](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_LogEntity]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_BlogManager]    Script Date: 6/30/2016 4:18:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table_BlogManager](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[BlogTypeId] [uniqueidentifier] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+ CONSTRAINT [PK_Table_BlogManager] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Table_BlogReply]    Script Date: 6/30/2016 4:18:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table_BlogReply](
+	[ID] [uniqueidentifier] NOT NULL,
+	[BlogID] [uniqueidentifier] NOT NULL,
+	[Content] [nvarchar](max) NOT NULL,
+	[Publisher] [uniqueidentifier] NOT NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Table_BlogReply] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Table_LogEntity]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +257,7 @@ CREATE TABLE [dbo].[Table_LogEntity](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_OperationLog]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_OperationLog]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -200,7 +274,7 @@ CREATE TABLE [dbo].[Table_OperationLog](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_OperationType]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_OperationType]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -215,7 +289,7 @@ CREATE TABLE [dbo].[Table_OperationType](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_Question]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_Question]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,6 +301,8 @@ CREATE TABLE [dbo].[Table_Question](
 	[Date] [datetime] NOT NULL,
 	[Content] [nvarchar](max) NOT NULL,
 	[Publisher] [uniqueidentifier] NOT NULL,
+	[TypeId] [uniqueidentifier] NOT NULL,
+	[Status] [int] NOT NULL,
  CONSTRAINT [PK_Table_Question] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -234,7 +310,25 @@ CREATE TABLE [dbo].[Table_Question](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Table_User]    Script Date: 2016/5/8 21:51:03 ******/
+/****** Object:  Table [dbo].[Table_SubBlogReply]    Script Date: 6/30/2016 4:18:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table_SubBlogReply](
+	[ID] [uniqueidentifier] NOT NULL,
+	[ReplyID] [uniqueidentifier] NOT NULL,
+	[Content] [nvarchar](max) NOT NULL,
+	[Publisher] [uniqueidentifier] NOT NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Table_SubBlogReply] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Table_User]    Script Date: 6/30/2016 4:18:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -273,6 +367,16 @@ REFERENCES [dbo].[Table_Question] ([ID])
 GO
 ALTER TABLE [dbo].[Table_Attachments] CHECK CONSTRAINT [FK_Table_Attachments_Table_Question]
 GO
+ALTER TABLE [dbo].[Table_BBSManager]  WITH CHECK ADD  CONSTRAINT [FK_Table_BBSManager_Table_BBSItem] FOREIGN KEY([BBSTypeId])
+REFERENCES [dbo].[Table_BBSItem] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BBSManager] CHECK CONSTRAINT [FK_Table_BBSManager_Table_BBSItem]
+GO
+ALTER TABLE [dbo].[Table_BBSManager]  WITH CHECK ADD  CONSTRAINT [FK_Table_BBSManager_Table_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Table_User] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BBSManager] CHECK CONSTRAINT [FK_Table_BBSManager_Table_User]
+GO
 ALTER TABLE [dbo].[Table_Blog]  WITH CHECK ADD  CONSTRAINT [FK_Table_Blog_Table_BlogItem] FOREIGN KEY([BlogItemId])
 REFERENCES [dbo].[Table_BlogItem] ([ID])
 GO
@@ -287,6 +391,26 @@ ALTER TABLE [dbo].[Table_BlogAttachments]  WITH CHECK ADD  CONSTRAINT [FK_Table_
 REFERENCES [dbo].[Table_Blog] ([ID])
 GO
 ALTER TABLE [dbo].[Table_BlogAttachments] CHECK CONSTRAINT [FK_Table_BlogAttachments_Table_Blog]
+GO
+ALTER TABLE [dbo].[Table_BlogManager]  WITH CHECK ADD  CONSTRAINT [FK_Table_BlogManager_Table_BlogItem] FOREIGN KEY([BlogTypeId])
+REFERENCES [dbo].[Table_BlogItem] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BlogManager] CHECK CONSTRAINT [FK_Table_BlogManager_Table_BlogItem]
+GO
+ALTER TABLE [dbo].[Table_BlogManager]  WITH CHECK ADD  CONSTRAINT [FK_Table_BlogManager_Table_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Table_User] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BlogManager] CHECK CONSTRAINT [FK_Table_BlogManager_Table_User]
+GO
+ALTER TABLE [dbo].[Table_BlogReply]  WITH CHECK ADD  CONSTRAINT [FK_Table_BlogReply_Table_Blog] FOREIGN KEY([BlogID])
+REFERENCES [dbo].[Table_Blog] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BlogReply] CHECK CONSTRAINT [FK_Table_BlogReply_Table_Blog]
+GO
+ALTER TABLE [dbo].[Table_BlogReply]  WITH CHECK ADD  CONSTRAINT [FK_Table_BlogReply_Table_User] FOREIGN KEY([Publisher])
+REFERENCES [dbo].[Table_User] ([ID])
+GO
+ALTER TABLE [dbo].[Table_BlogReply] CHECK CONSTRAINT [FK_Table_BlogReply_Table_User]
 GO
 ALTER TABLE [dbo].[Table_LogEntity]  WITH CHECK ADD  CONSTRAINT [FK_Table_LogEntity_Table_OperationType] FOREIGN KEY([OperationTypeID])
 REFERENCES [dbo].[Table_OperationType] ([ID])
@@ -303,10 +427,25 @@ REFERENCES [dbo].[Table_User] ([ID])
 GO
 ALTER TABLE [dbo].[Table_OperationLog] CHECK CONSTRAINT [FK_Table_OperationLog_Table_User]
 GO
+ALTER TABLE [dbo].[Table_Question]  WITH CHECK ADD  CONSTRAINT [FK_Table_Question_Table_BBSItem] FOREIGN KEY([TypeId])
+REFERENCES [dbo].[Table_BBSItem] ([ID])
+GO
+ALTER TABLE [dbo].[Table_Question] CHECK CONSTRAINT [FK_Table_Question_Table_BBSItem]
+GO
 ALTER TABLE [dbo].[Table_Question]  WITH CHECK ADD  CONSTRAINT [FK_Table_Question_Table_User] FOREIGN KEY([Publisher])
 REFERENCES [dbo].[Table_User] ([ID])
 GO
 ALTER TABLE [dbo].[Table_Question] CHECK CONSTRAINT [FK_Table_Question_Table_User]
+GO
+ALTER TABLE [dbo].[Table_SubBlogReply]  WITH CHECK ADD  CONSTRAINT [FK_Table_SubBlogReply_Table_BlogReply] FOREIGN KEY([ReplyID])
+REFERENCES [dbo].[Table_BlogReply] ([ID])
+GO
+ALTER TABLE [dbo].[Table_SubBlogReply] CHECK CONSTRAINT [FK_Table_SubBlogReply_Table_BlogReply]
+GO
+ALTER TABLE [dbo].[Table_SubBlogReply]  WITH CHECK ADD  CONSTRAINT [FK_Table_SubBlogReply_Table_User] FOREIGN KEY([Publisher])
+REFERENCES [dbo].[Table_User] ([ID])
+GO
+ALTER TABLE [dbo].[Table_SubBlogReply] CHECK CONSTRAINT [FK_Table_SubBlogReply_Table_User]
 GO
 USE [master]
 GO

@@ -7,7 +7,7 @@
       <Diagram DiagramId="0488002eeb604cd3b7fdc8ab829e721a" Name="Diagram1">
         <EntityTypeShape EntityType="BYSDNModel.Table_Answer" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BYSDNModel.Table_Attachments" Width="1.5" PointX="8.25" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BYSDNModel.Table_BBSItem" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BYSDNModel.Table_BBSItem" Width="1.5" PointX="10.5" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BYSDNModel.Table_BBSManager" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BYSDNModel.Table_Blog" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BYSDNModel.Table_BlogAttachments" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />

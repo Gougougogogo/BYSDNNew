@@ -1,0 +1,41 @@
+﻿
+<div class="container-overlap bg-indigo-500 ng-scope">
+    <div class="media m0 pv">
+        <div class="media-body media-middle">
+            <h4 class="media-heading">Edit blog page</h4><span class="text-muted">Edit your blog here!</span>
+        </div>
+    </div>
+</div>
+<div class="container container-lg" ng-controller="editBlogController">
+    <div class="card">
+        <div class="card-body">
+            <form class="mt ng-pristine ng-valid" action="">
+                <div class="input-group mda-input-group">
+                    <div class="mda-form-group">
+                        <div class="mda-form-control">
+                            <input class="no-resize form-control" ng-model="blogContent.Title" aria-invalid="false" aria-multiline="false" rows="1"></input>
+                            <div class="mda-form-control-line"></div>
+                            <label class="m0">Title</label>
+                        </div><span class="mda-form-msg right">Post your blog title here</span>
+                    </div>
+                    <span class="input-group-btn">
+                    </span>
+                </div>
+                <div class="input-group mda-input-group">
+                    <div class="mda-form-group">
+                        <div class="mda-form-control">
+                            <textarea rows="15" cols="80" style="width: 80%"></textarea>
+                            <div class="mda-form-control-line"></div>
+                            <label class="m0">Content</label>
+                        </div><span class="mda-form-msg right">Post your content here</span>
+                    </div>
+                    <span class="input-group-btn">
+                    </span>
+                </div>
+                <div class="input-group" style="width:100%">
+                    <button class="btn btn-primary btn-sm pull-right" type="button" ng-click="publish()">Submit Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

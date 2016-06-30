@@ -1,0 +1,38 @@
+﻿<div ng-controller="bbsSearchController">
+    <div class="container-overlap bg-indigo-500">
+        <div class="container container-md pr-xl">
+            <form action="">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <div class="mda-form-group mda-form-group-lg float-label">
+                            <div class="mda-form-control mda-form-control-dark">
+                                <input type="text" ng-model="searchPattern" class="no-resize form-control" />
+                                <div class="mda-form-control-line"></div>
+                                <label>Search</label>
+                            </div>
+                            <span class="mda-form-msg right">Post your keywords here</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-flat btn-success btn-circle" ng-click="search()" type="button" style="margin-top:25px;"><em class="ion-checkmark-round"></em></button>
+                        </span>
+                    </div>
+                </div>
+            </form>          
+        </div>
+    </div>
+    <div class="container container-md">
+        <div class="card">
+            <div class="card-body">
+                <p class="lead">{{ 'Search results for "' + keyword + '"'  }}</p>
+                <ul class="list-group" ng-show="searchResult.length > 0">
+                    <li ui-sref="app.bbs.detail({ bbsId: item.Id })" ng-repeat="item in searchResult" class="list-group-item">
+                        <h5 class="mb-sm"><a href="">{{ item.Title }}</a></h5>
+                        <p ng-bind-html="item.Sample|to_trusted"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,7 +61,7 @@
                     <div class="col-xs-12">
                         <ui-select ng-model="$parent.selectedType" theme="bootstrap">
                             <ui-select-match placeholder="Select types...">{{$select.selected.BBSTypeName}}</ui-select-match>
-                            <ui-select-choices repeat="item in availableTypes | filter:$select.search">{{item.BBSTypeName}}</ui-select-choices>
+                            <ui-select-choices repeat="item in availableTypes | filter:$select.search">{{item.ID}}</ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
